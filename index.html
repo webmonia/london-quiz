@@ -408,15 +408,26 @@ h1, h2, h3, p { overflow-wrap: break-word; }
   margin: 0 auto;
   padding: 0 20px 36px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
+  gap: 8px;
   text-align: center;
-  font-size: 15px;
-  font-weight: 700;
   color: var(--ink-soft);
 }
+.site-footer p { margin: 0; }
+.site-footer__project { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 15px; font-weight: 700; }
+.site-footer__legal { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 10px; font-size: 13px; font-weight: 600; }
 .site-footer strong { color: var(--ink); font-weight: 900; }
+.site-footer a {
+  color: var(--ink);
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-color: var(--red);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+.site-footer a:hover { color: var(--red); }
+.site-footer a:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; border-radius: 4px; }
 .site-footer .brand__mark { width: 22px; height: 22px; border-width: 5px; }
 .site-footer .brand__mark::after { left: -8px; right: -8px; height: 5px; }
 
@@ -922,6 +933,7 @@ h1, h2, h3, p { overflow-wrap: break-word; }
     border: 0;
   }
   .author__avatar { width: 40px; height: 40px; font-size: 13px; }
+  .site-footer__sep { display: none; }
   .form { grid-template-columns: 1fr; }
   .qcard { padding: 34px 18px 20px; border-radius: 24px; }
   .qcard__text { margin-right: 0; }
@@ -1262,8 +1274,15 @@ h1, h2, h3, p { overflow-wrap: break-word; }
 </main>
 
 <footer class="site-footer">
-  <span class="brand__mark" aria-hidden="true"></span>
-  <span data-i18n-html="footer">Училищен проект на <strong>Стефан Илчев</strong> · 4 Д клас</span>
+  <p class="site-footer__project">
+    <span class="brand__mark" aria-hidden="true"></span>
+    <span data-i18n-html="footer">Училищен проект на <strong>Стефан Илчев</strong> · 4 Д клас</span>
+  </p>
+  <p class="site-footer__legal">
+    <span data-i18n="footer.rights">© 2026 Стефан Илчев. Всички права запазени.</span>
+    <span class="site-footer__sep" aria-hidden="true">·</span>
+    <span data-i18n-html="footer.helper">Техническа помощ: <a href="https://github.com/webmonia" target="_blank" rel="noopener">Симона Илчева</a></span>
+  </p>
 </footer>
 
 <!-- Химнът (вграден запис, работи без интернет) -->
@@ -1596,6 +1615,11 @@ h1, h2, h3, p { overflow-wrap: break-word; }
     initials: { bg: 'СИ', en: 'SI' },
     grade: { bg: '4 Д клас', en: 'Class 4D' },
   });
+  const HELPER = Object.freeze({
+    name: { bg: 'Симона Илчева', en: 'Simona Ilcheva' },
+    url: 'https://github.com/webmonia',
+  });
+  const COPYRIGHT_YEAR = 2026;
 
   /* ================= Текстове на двата езика ================= */
   const TEXT = Object.freeze({
@@ -1654,6 +1678,8 @@ h1, h2, h3, p { overflow-wrap: break-word; }
       'author.initials': '{initials}',
       'author.class': '{grade}',
       footer: 'Училищен проект на <strong>{author}</strong> · {grade}',
+      'footer.rights': '© {year} {author}. Всички права запазени.',
+      'footer.helper': 'Техническа помощ: <a href="{helperUrl}" target="_blank" rel="noopener">{helper}</a>',
       credits: 'Гербовете: Sodacan / Wikimedia Commons (CC BY-SA). Химнът: U.S. Navy Band / Wikimedia Commons (обществено достояние). Шрифтове: Unbounded и Nunito (SIL Open Font License).',
     },
     [LANG.EN]: {
@@ -1711,6 +1737,8 @@ h1, h2, h3, p { overflow-wrap: break-word; }
       'author.initials': '{initials}',
       'author.class': '{grade}',
       footer: 'A school project by <strong>{author}</strong> · {grade}',
+      'footer.rights': '© {year} {author}. All rights reserved.',
+      'footer.helper': 'Technical help: <a href="{helperUrl}" target="_blank" rel="noopener">{helper}</a>',
       credits: 'Coats of arms: Sodacan / Wikimedia Commons (CC BY-SA). Anthem: U.S. Navy Band / Wikimedia Commons (public domain). Fonts: Unbounded and Nunito (SIL Open Font License).',
     },
   });
@@ -1985,6 +2013,9 @@ h1, h2, h3, p { overflow-wrap: break-word; }
     author: AUTHOR.name[lang],
     initials: AUTHOR.initials[lang],
     grade: AUTHOR.grade[lang],
+    helper: HELPER.name[lang],
+    helperUrl: HELPER.url,
+    year: COPYRIGHT_YEAR,
   });
   const SCORE_CIRCUMFERENCE = 2 * Math.PI * SCORE_RADIUS;
 
