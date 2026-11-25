@@ -1,0 +1,2240 @@
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Викторина: Лондон и Англия</title>
+<style>
+/* ===== Шрифтове (вградени, работят без интернет) ===== */
+@font-face {
+  font-family: 'Nunito'; font-style: normal; font-weight: 400 900; font-display: swap;
+  src: url("{{FONT_NUNITO_CYRILLIC}}") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Nunito'; font-style: normal; font-weight: 400 900; font-display: swap;
+  src: url("{{FONT_NUNITO_LATIN}}") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Unbounded'; font-style: normal; font-weight: 500 900; font-display: swap;
+  src: url("{{FONT_UNBOUNDED_CYRILLIC}}") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Unbounded'; font-style: normal; font-weight: 500 900; font-display: swap;
+  src: url("{{FONT_UNBOUNDED_LATIN}}") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ===== Цветове и основни настройки ===== */
+:root {
+  --paper: #F5EEE1;
+  --paper-deep: #EADFC9;
+  --card: #FFFCF6;
+  --ink: #13213F;
+  --ink-soft: #4A5675;
+  --red: #D7192D;
+  --red-deep: #A8101F;
+  --red-tint: #FCE6E7;
+  --navy: #0E2A5C;
+  --navy-tint: #E4EBF6;
+  --sky: #CFE5F2;
+  --sky-deep: #9DC1DA;
+  --river: #5B8DB8;
+  --green: #0A8A45;
+  --green-tint: #E1F4E8;
+  --gold: #F4B400;
+  --gold-tint: #FFF2CC;
+  --road: #39404F;
+  --line: rgba(19, 33, 63, .14);
+  --shadow-sm: 0 1px 0 rgba(19, 33, 63, .08), 0 6px 14px -8px rgba(19, 33, 63, .3);
+  --shadow: 0 1px 0 rgba(19, 33, 63, .06), 0 22px 44px -22px rgba(19, 33, 63, .45);
+  --font-display: 'Unbounded', 'Nunito', 'Segoe UI', sans-serif;
+  --font-body: 'Nunito', 'Segoe UI', sans-serif;
+  --ease-out: cubic-bezier(.2, .8, .2, 1);
+  --bus-w: 84px;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--ink);
+  background:
+    radial-gradient(1100px 560px at 90% -10%, rgba(207, 229, 242, .95), transparent 60%),
+    radial-gradient(900px 520px at -10% 110%, rgba(252, 230, 231, .9), transparent 60%),
+    var(--paper);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+/* Лека „хартиена“ текстура */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: .55;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.07 0 0 0 0 0.13 0 0 0 0 0.25 0 0 0 .07 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+button, input { font: inherit; }
+h1, h2, h3, p { overflow-wrap: break-word; }
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* Шарена ивица като линиите на метрото */
+.tube-stripe {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 6px;
+  z-index: 20;
+  background: linear-gradient(90deg,
+    #DC241F 0 20%, #0019A8 20% 40%, #00782A 40% 60%, #FFC80A 60% 80%, #9B0056 80% 100%);
+}
+
+/* ===== Горна лента ===== */
+.topbar {
+  position: relative;
+  z-index: 2;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px 20px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.brand__mark {
+  position: relative;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 7px solid var(--red);
+}
+.brand__mark::after {
+  content: '';
+  position: absolute;
+  left: -12px; right: -12px; top: 50%;
+  height: 8px;
+  transform: translateY(-50%);
+  background: var(--navy);
+  border-radius: 1px;
+}
+
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 2px solid var(--ink);
+  background: var(--card);
+  box-shadow: 0 4px 0 var(--ink);
+  color: var(--ink-soft);
+  font-weight: 900;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform .15s var(--ease-out), box-shadow .15s;
+}
+.lang-switch:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--ink); }
+.lang-switch:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+.lang-switch__opt {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  opacity: .5;
+  transition: opacity .2s, color .2s;
+}
+.lang-switch__opt.is-on { opacity: 1; color: var(--ink); }
+.lang-switch__flag {
+  display: block;
+  width: 22px;
+  height: 14px;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .15);
+}
+.lang-switch__track {
+  position: relative;
+  width: 46px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--navy);
+  transition: background .3s;
+}
+.lang-switch__knob {
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .3);
+  transition: transform .35s var(--ease-out);
+}
+.lang-switch[aria-checked="true"] .lang-switch__track { background: var(--red); }
+.lang-switch[aria-checked="true"] .lang-switch__knob { transform: translateX(20px); }
+
+/* ===== Екрани ===== */
+.app {
+  position: relative;
+  z-index: 1;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 10px 20px 56px;
+}
+.screen { display: none; }
+.screen.is-active { display: block; animation: screenIn .55s var(--ease-out) both; }
+
+/* ===== Бутони ===== */
+.btn {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 1;
+  padding: 16px 26px;
+  border-radius: 999px;
+  transition: transform .15s var(--ease-out), box-shadow .15s, background .2s;
+}
+.btn svg { width: 22px; height: 22px; flex: none; }
+.btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
+.btn--primary {
+  background: var(--red);
+  color: #fff;
+  box-shadow: 0 6px 0 var(--red-deep), 0 16px 26px -14px rgba(168, 16, 31, .8);
+}
+.btn--primary:hover { transform: translateY(-2px); box-shadow: 0 8px 0 var(--red-deep), 0 20px 30px -14px rgba(168, 16, 31, .8); }
+.btn--primary:active { transform: translateY(5px); box-shadow: 0 1px 0 var(--red-deep); }
+.btn--ghost {
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 2px var(--ink), 0 6px 0 var(--ink);
+}
+.btn--ghost:hover { transform: translateY(-2px); box-shadow: inset 0 0 0 2px var(--ink), 0 8px 0 var(--ink); }
+.btn--ghost:active { transform: translateY(5px); box-shadow: inset 0 0 0 2px var(--ink), 0 1px 0 var(--ink); }
+.btn--big { font-family: var(--font-display); font-weight: 700; font-size: 20px; padding: 20px 30px; }
+.btn__arrow { transition: transform .2s var(--ease-out); }
+.btn:hover .btn__arrow { transform: translateX(4px); }
+
+.eyebrow {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--red);
+  color: #fff;
+  font-weight: 900;
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(28px, 4.2vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -.01em;
+}
+.title em {
+  font-style: normal;
+  color: var(--red);
+  background: linear-gradient(transparent 68%, var(--gold-tint) 68%);
+}
+.title em + em { color: var(--navy); }
+
+/* ===== Екран 1: Начало ===== */
+.poster {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 32px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.poster__art {
+  position: relative;
+  min-height: 420px;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--sky) 0%, #E6F0F3 58%, #F1EBDD 100%);
+  border-right: 2px solid var(--ink);
+}
+.poster__body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 40px 40px 36px;
+}
+.lead { margin: 0; font-size: 18px; font-weight: 700; color: var(--ink-soft); }
+
+.art__sun {
+  position: absolute;
+  top: 34px; right: 44px;
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #FFE08A, var(--gold));
+  box-shadow: 0 0 0 14px rgba(244, 180, 0, .14), 0 0 0 30px rgba(244, 180, 0, .07);
+}
+.art__cloud {
+  position: absolute;
+  width: 92px; height: 26px;
+  border-radius: 999px;
+  background: #fff;
+  opacity: .95;
+  animation: drift 34s linear infinite;
+}
+.art__cloud::before, .art__cloud::after {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  border-radius: 50%;
+  background: #fff;
+}
+.art__cloud::before { left: 16px; width: 34px; height: 34px; }
+.art__cloud::after { left: 40px; width: 42px; height: 42px; }
+.art__cloud--1 { top: 66px; left: -100px; }
+.art__cloud--2 { top: 124px; left: -100px; transform: scale(.7); animation-duration: 46s; animation-delay: -20s; }
+.art__skyline { position: absolute; left: 0; right: 0; bottom: 46px; width: 100%; height: auto; display: block; }
+.eye-wheel { transform-box: fill-box; transform-origin: center; animation: spin 60s linear infinite; }
+.art__road {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 46px;
+  background: var(--road);
+}
+.art__road::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: 50%;
+  height: 3px;
+  margin-top: -1.5px;
+  background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .75) 0 18px, transparent 18px 34px);
+}
+.art__bus {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  width: 170px;
+  margin-left: -85px;
+  animation: busArrive 1.6s var(--ease-out) .25s both;
+}
+.art__bus .wheel { animation: spin .4s linear .25s 4; }
+.art__bus .bus__body { animation: idle 1.6s ease-in-out 2s infinite; }
+.art__bus.is-leaving { animation: busLeave .7s cubic-bezier(.55, 0, .8, .2) forwards; }
+.art__bus.is-leaving .wheel { animation: spin .3s linear infinite; }
+.art__bus.is-leaving .puff { animation: puff .6s ease-out infinite; }
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr 130px;
+  gap: 14px;
+  margin-top: 6px;
+}
+.field { display: flex; flex-direction: column; gap: 6px; font-weight: 900; font-size: 15px; }
+.field input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 2px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 1.2;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.field input::placeholder { color: #A0A7B8; font-weight: 700; }
+.field input:focus { border-color: var(--navy); box-shadow: 0 0 0 4px rgba(14, 42, 92, .15); }
+.field input.is-invalid { border-color: var(--red); animation: shake .45s; }
+.form__error { grid-column: 1 / -1; min-height: 1.4em; margin: -4px 0 0; color: var(--red-deep); font-weight: 900; font-size: 15px; }
+.form .btn { grid-column: 1 / -1; }
+
+/* ===== Екран 2: Въпросите ===== */
+.route {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 24px;
+  padding: 12px 16px 10px;
+  box-shadow: var(--shadow-sm);
+}
+.route__inner {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 92px;
+}
+.route__road {
+  position: absolute;
+  left: 0; right: 0; bottom: 4px;
+  height: 22px;
+  border-radius: 11px;
+  background: var(--road);
+}
+.route__road::after {
+  content: '';
+  position: absolute;
+  left: 12px; right: 12px; top: 50%;
+  height: 2px;
+  margin-top: -1px;
+  background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .6) 0 10px, transparent 10px 20px);
+}
+.route__track { position: relative; flex: 1; height: 100%; }
+.route__stop {
+  position: absolute;
+  bottom: 10px;
+  left: calc(var(--bus-w) / 2 + var(--k) * (100% - var(--bus-w)));
+  width: 10px; height: 10px;
+  margin-left: -5px;
+  border-radius: 50%;
+  background: #6B7385;
+  box-shadow: 0 0 0 2px var(--road);
+  z-index: 1;
+  transition: background .3s ease .75s, transform .3s ease .75s;
+}
+.route__stop.is-correct { background: #3DDC84; transform: scale(1.25); }
+.route__stop.is-wrong { background: #FF5A6A; transform: scale(1.25); }
+.route__bus {
+  position: absolute;
+  bottom: 9px;
+  left: calc(var(--p, 0) * (100% - var(--bus-w)));
+  width: var(--bus-w);
+  z-index: 2;
+  transition: left .95s cubic-bezier(.45, .05, .25, 1);
+}
+.route__finish { position: relative; z-index: 1; flex: none; width: 36px; height: 100%; }
+.route__finish svg { position: absolute; bottom: 8px; left: 0; width: 36px; height: auto; }
+.route.no-anim, .route.no-anim * { transition: none !important; }
+
+.bus { display: block; width: 100%; height: auto; overflow: visible; }
+.bus .wheel { transform-box: fill-box; transform-origin: center; }
+.bus .puff { transform-box: fill-box; transform-origin: center; opacity: 0; }
+.bus .puff--2 { animation-delay: .3s !important; }
+.bus.is-driving .wheel { animation: spin .32s linear infinite; }
+.bus.is-driving .bus__body { animation: bob .2s ease-in-out infinite alternate; }
+.bus.is-driving .puff { animation: puff .6s ease-out infinite; }
+
+.quiz-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 24px 4px 42px;
+}
+.counter { font-family: var(--font-display); font-weight: 700; font-size: 16px; }
+.counter b { color: var(--red); font-weight: 800; }
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px 6px 9px;
+  border-radius: 999px;
+  font-weight: 900;
+  font-size: 14px;
+  line-height: 1.1;
+}
+.tag__icon { flex: none; display: block; }
+.tag--london { background: var(--red-tint); color: var(--red-deep); }
+.tag--london .tag__icon { width: 10px; height: 18px; }
+.tag--england { background: var(--navy-tint); color: var(--navy); }
+.tag--england .tag__icon { width: 21px; height: 13px; border-radius: 2px; box-shadow: 0 0 0 1px rgba(0, 0, 0, .15); }
+.points {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px 6px 10px;
+  border-radius: 999px;
+  background: var(--gold-tint);
+  color: #7A5600;
+  font-weight: 900;
+  font-size: 15px;
+}
+.points svg { width: 18px; height: 18px; color: var(--gold); }
+.points.is-bump { animation: bump .55s var(--ease-out); }
+
+.qcard {
+  position: relative;
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 28px;
+  padding: 36px 34px 26px;
+  box-shadow: var(--shadow);
+}
+.qcard.is-entering { animation: cardIn .5s var(--ease-out) both; }
+.roundel {
+  position: absolute;
+  top: -30px; right: 34px;
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  border: 11px solid var(--red);
+  background: var(--card);
+}
+.roundel__bar {
+  position: absolute;
+  left: -22px; right: -22px; top: 50%;
+  transform: translateY(-50%);
+  padding: 5px 0 4px;
+  border-radius: 2px;
+  background: var(--navy);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 1;
+  text-align: center;
+}
+.qcard__text {
+  margin: 0 70px 26px 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(22px, 3.1vw, 31px);
+  line-height: 1.22;
+}
+.answers { display: grid; gap: 12px; }
+.answer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 14px 18px 14px 14px;
+  border-radius: 18px;
+  border: 2px solid var(--line);
+  background: #fff;
+  box-shadow: 0 4px 0 var(--line);
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 1.3;
+  text-align: left;
+  cursor: pointer;
+  transition: transform .15s var(--ease-out), border-color .2s, background .2s, box-shadow .15s, opacity .3s;
+}
+.answer:hover:not(:disabled) { border-color: var(--navy); transform: translateY(-2px); box-shadow: 0 6px 0 rgba(14, 42, 92, .3); }
+.answer:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 1px 0 rgba(14, 42, 92, .3); }
+.answer:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+.answer:disabled { cursor: default; }
+.answer__letter {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--navy);
+  background: var(--paper);
+  color: var(--navy);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 17px;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.answer__text { flex: 1; }
+.answer__mark { flex: none; display: none; width: 30px; height: 30px; }
+.answer.is-correct { background: var(--green-tint); border-color: var(--green); box-shadow: 0 4px 0 var(--green); }
+.answer.is-correct .answer__letter { background: var(--green); border-color: var(--green); color: #fff; }
+.answer.is-correct .answer__mark--ok { display: block; color: var(--green); }
+.answer.is-wrong { background: var(--red-tint); border-color: var(--red); box-shadow: 0 4px 0 var(--red); }
+.answer.is-wrong .answer__letter { background: var(--red); border-color: var(--red); color: #fff; }
+.answer.is-wrong .answer__mark--bad { display: block; color: var(--red); }
+.answer.is-dim { opacity: .45; }
+.answer.is-picked.is-correct { animation: pop .5s var(--ease-out); }
+.answer.is-picked.is-wrong { animation: shake .45s; }
+.qcard.is-entering .answer { animation: answerIn .45s var(--ease-out) both; animation-delay: calc(.12s + var(--i) * .07s); }
+
+.qcard__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px 18px;
+  min-height: 62px;
+  margin-top: 22px;
+}
+.hint { margin: 0; color: var(--ink-soft); font-weight: 700; font-size: 15px; }
+.feedback {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-weight: 900;
+  font-size: 19px;
+  animation: fadeUp .35s var(--ease-out) both;
+}
+.feedback svg { flex: none; width: 30px; height: 30px; padding: 5px; border-radius: 50%; color: #fff; }
+.feedback--ok { color: var(--green); }
+.feedback--ok svg { background: var(--green); }
+.feedback--bad { color: var(--red-deep); }
+.feedback--bad svg { background: var(--red); }
+.qcard__footer .btn { margin-left: auto; animation: fadeUp .35s var(--ease-out) .1s both; }
+
+/* ===== Екран 3: Резултат ===== */
+.result-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 34px;
+  padding: 36px 40px;
+  border-radius: 32px;
+  background: var(--navy);
+  color: #fff;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.result-hero__flag {
+  position: absolute;
+  right: -90px; top: -60px;
+  width: 460px; height: 230px;
+  opacity: .1;
+  transform: rotate(-12deg);
+  pointer-events: none;
+}
+.result-hero > *:not(.result-hero__flag) { position: relative; }
+.result-hero .eyebrow { background: var(--gold); color: var(--ink); }
+.result-hero .title { color: #fff; margin-top: 12px; }
+.result-hero__sub { margin: 8px 0 0; font-weight: 800; font-size: 18px; opacity: .9; }
+.result-hero__sub span + span::before { content: '·'; margin: 0 10px; opacity: .6; }
+.rank {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 10px 18px 10px 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, .1);
+  border: 2px solid rgba(255, 255, 255, .25);
+  animation: popIn .6s var(--ease-out) .9s both;
+}
+.rank__icon { font-size: 30px; line-height: 1; }
+.rank__title { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--gold); }
+.rank__note { display: block; font-weight: 700; font-size: 14px; opacity: .85; }
+
+.score { position: relative; width: 170px; height: 170px; }
+.score__ring { width: 100%; height: 100%; transform: rotate(-90deg); }
+.score__track { fill: none; stroke: rgba(255, 255, 255, .14); stroke-width: 14; }
+.score__fill {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 14;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1.2s var(--ease-out) .2s;
+}
+.score__num {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  font-family: var(--font-display);
+  line-height: 1;
+}
+.score__num b { font-size: 52px; font-weight: 800; }
+.score__num span { font-size: 16px; font-weight: 600; opacity: .7; margin-top: 4px; }
+
+.section { margin-top: 40px; }
+.section-title {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(22px, 3vw, 30px);
+  line-height: 1.15;
+}
+.section-lead { margin: 0 0 20px; max-width: 66ch; color: var(--ink-soft); font-weight: 700; }
+
+.symbols { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.symbol-card {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 24px;
+  padding: 20px 20px 18px;
+  box-shadow: var(--shadow-sm);
+}
+.symbol-card__title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 16px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+}
+.symbol-card__row { display: grid; grid-template-columns: 1.25fr 1fr; gap: 16px; align-items: start; }
+.symbol { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+.symbol__visual { display: flex; align-items: center; justify-content: center; width: 100%; height: 140px; }
+.symbol__flag {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .12), 0 10px 18px -8px rgba(19, 33, 63, .45);
+  transform-origin: left center;
+  animation: wave 3.2s ease-in-out infinite;
+}
+.symbol__arms { display: block; height: 132px; width: auto; max-width: 100%; object-fit: contain; filter: drop-shadow(0 8px 8px rgba(19, 33, 63, .25)); }
+.symbol figcaption { font-size: 14px; font-weight: 700; line-height: 1.35; color: var(--ink-soft); }
+
+.anthem {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 18px 22px;
+  margin-top: 18px;
+  padding: 22px 26px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #17387A, var(--navy) 70%);
+  color: #fff;
+  box-shadow: var(--shadow);
+}
+.anthem__btn {
+  display: grid;
+  place-items: center;
+  width: 78px; height: 78px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--red);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 6px 0 var(--red-deep), 0 0 0 7px rgba(255, 255, 255, .12);
+  transition: transform .15s var(--ease-out), box-shadow .15s;
+}
+.anthem__btn:hover { transform: translateY(-2px) scale(1.03); }
+.anthem__btn:active { transform: translateY(5px); box-shadow: 0 1px 0 var(--red-deep), 0 0 0 7px rgba(255, 255, 255, .12); }
+.anthem__btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 6px; }
+.anthem__btn svg { width: 32px; height: 32px; }
+.anthem__icon-pause { display: none; }
+.anthem.is-playing .anthem__icon-play { display: none; }
+.anthem.is-playing .anthem__icon-pause { display: block; }
+.anthem__head { display: flex; align-items: center; gap: 12px; }
+.anthem__title { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 19px; line-height: 1.2; }
+.anthem__by { margin: 4px 0 12px; font-weight: 700; font-size: 14px; opacity: .75; }
+.anthem__bar { display: flex; align-items: center; gap: 14px; }
+.anthem__time { min-width: 86px; text-align: right; font-weight: 800; font-size: 14px; font-variant-numeric: tabular-nums; }
+.anthem__range {
+  flex: 1;
+  height: 8px;
+  margin: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--gold) var(--fill, 0%), rgba(255, 255, 255, .22) var(--fill, 0%));
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+}
+.anthem__range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .45);
+}
+.anthem__range::-moz-range-thumb { width: 20px; height: 20px; border: 0; border-radius: 50%; background: #fff; }
+.anthem__range:focus-visible { outline: 3px solid var(--gold); outline-offset: 5px; }
+.anthem__eq { display: inline-flex; align-items: flex-end; gap: 3px; height: 18px; }
+.anthem__eq i { display: block; width: 4px; height: 25%; border-radius: 2px; background: var(--gold); }
+.anthem.is-playing .anthem__eq i { animation: eq .9s ease-in-out infinite; }
+.anthem.is-playing .anthem__eq i:nth-child(2) { animation-delay: -.3s; }
+.anthem.is-playing .anthem__eq i:nth-child(3) { animation-delay: -.6s; }
+.anthem.is-playing .anthem__eq i:nth-child(4) { animation-delay: -.15s; }
+.anthem__fact {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, .16);
+  font-weight: 700;
+  font-size: 15px;
+  opacity: .9;
+}
+
+.review { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.review-item {
+  position: relative;
+  padding: 20px 22px;
+  border-radius: 22px;
+  border: 2px solid var(--line);
+  border-left: 9px solid var(--green);
+  background: var(--card);
+  box-shadow: var(--shadow-sm);
+  animation: fadeUp .5s var(--ease-out) both;
+  animation-delay: calc(var(--i) * 50ms);
+}
+.review-item.is-wrong { border-left-color: var(--red); }
+.review-item__head { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
+.review-item__num {
+  display: grid;
+  place-items: center;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 13px;
+}
+.review-item__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  padding: 5px 12px 5px 8px;
+  border-radius: 999px;
+  font-weight: 900;
+  font-size: 14px;
+}
+.review-item__status svg { width: 18px; height: 18px; }
+.review-item.is-correct .review-item__status { background: var(--green-tint); color: var(--green); }
+.review-item.is-wrong .review-item__status { background: var(--red-tint); color: var(--red-deep); }
+.review-item__q { margin: 0 0 10px; font-family: var(--font-display); font-weight: 700; font-size: 18px; line-height: 1.3; }
+.review-item__answer, .review-item__yours { margin: 0; font-weight: 700; }
+.review-item__answer strong { color: var(--green); font-weight: 900; }
+.review-item__yours { margin-top: 2px; color: var(--ink-soft); }
+.review-item__yours s { color: var(--red-deep); text-decoration-thickness: 2px; }
+.review-item__fact {
+  display: flex;
+  gap: 10px;
+  margin: 14px 0 0;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--gold-tint);
+  font-weight: 600;
+  font-size: 17px;
+}
+.review-item__fact svg { flex: none; width: 24px; height: 24px; color: #B07C00; }
+.review-item__fact b { font-weight: 900; }
+
+.result-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 36px; }
+.credits { max-width: 72ch; margin: 30px auto 0; text-align: center; font-size: 13px; font-weight: 600; color: var(--ink-soft); }
+
+/* ===== Анимации ===== */
+@keyframes screenIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes cardIn { from { opacity: 0; transform: translateX(40px) rotate(1deg); } to { opacity: 1; transform: none; } }
+@keyframes answerIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes popIn { from { opacity: 0; transform: scale(.7); } 70% { transform: scale(1.05); } to { opacity: 1; transform: none; } }
+@keyframes pop { 0% { transform: scale(1); } 40% { transform: scale(1.04); } 100% { transform: scale(1); } }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-8px); } 40% { transform: translateX(7px); } 60% { transform: translateX(-5px); } 80% { transform: translateX(3px); } }
+@keyframes bump { 0% { transform: scale(1); } 40% { transform: scale(1.25); } 100% { transform: scale(1); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes bob { from { transform: translateY(0); } to { transform: translateY(-1.2px); } }
+@keyframes idle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-.8px); } }
+@keyframes puff { 0% { opacity: .9; transform: translate(0, 0) scale(.6); } 100% { opacity: 0; transform: translate(-16px, -6px) scale(1.6); } }
+@keyframes busArrive { from { transform: translateX(-460px); } to { transform: translateX(0); } }
+@keyframes busLeave { from { transform: translateX(0); } to { transform: translateX(520px); } }
+@keyframes drift { from { transform: translateX(0); } to { transform: translateX(760px); } }
+@keyframes eq { 0%, 100% { height: 25%; } 50% { height: 100%; } }
+@keyframes wave { 0%, 100% { transform: perspective(500px) rotateY(0deg); } 50% { transform: perspective(500px) rotateY(-9deg); } }
+
+/* ===== Малки екрани ===== */
+@media (max-width: 820px) {
+  .poster { grid-template-columns: 1fr; }
+  .poster__art { min-height: 250px; border-right: 0; border-bottom: 2px solid var(--ink); }
+  .art__bus { width: 130px; margin-left: -65px; }
+  .poster__body { padding: 28px 24px 26px; }
+}
+@media (max-width: 760px) {
+  .symbols { grid-template-columns: 1fr; }
+  .result-hero { grid-template-columns: 1fr; justify-items: center; text-align: center; padding: 30px 22px; gap: 20px; }
+  .result-hero .eyebrow { align-self: center; }
+}
+@media (max-width: 560px) {
+  :root { --bus-w: 60px; }
+  body { font-size: 17px; }
+  .topbar { padding-top: 20px; }
+  .brand__text { display: none; }
+  .form { grid-template-columns: 1fr; }
+  .qcard { padding: 34px 18px 20px; border-radius: 24px; }
+  .qcard__text { margin-right: 0; }
+  .roundel { right: 20px; }
+  .answer { font-size: 18px; gap: 12px; }
+  .answer__letter { width: 38px; height: 38px; }
+  .qcard__footer .btn { width: 100%; }
+  .points { margin-left: 0; }
+  .anthem { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  .anthem__head { justify-content: center; }
+  .anthem__bar { width: 100%; }
+  .symbol-card__row { grid-template-columns: 1fr 1fr; }
+  .symbol__arms { height: 104px; }
+  .symbol__visual { height: 110px; }
+}
+@media (hover: none) { .hint { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Иконки и знамена, които се използват на много места -->
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <defs>
+    <clipPath id="uj-s"><path d="M0,0 v30 h60 v-30 z"/></clipPath>
+    <clipPath id="uj-t"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath>
+  </defs>
+  <symbol id="flag-uk" viewBox="0 0 60 30">
+    <g clip-path="url(#uj-s)">
+      <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
+      <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/>
+      <path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#uj-t)" stroke="#C8102E" stroke-width="4"/>
+      <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/>
+      <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/>
+    </g>
+  </symbol>
+  <symbol id="flag-en" viewBox="0 0 50 30">
+    <rect width="50" height="30" fill="#fff"/>
+    <rect x="22" width="6" height="30" fill="#CE1124"/>
+    <rect y="12" width="50" height="6" fill="#CE1124"/>
+  </symbol>
+  <symbol id="flag-bg" viewBox="0 0 5 3">
+    <rect width="5" height="1" fill="#fff"/>
+    <rect y="1" width="5" height="1" fill="#00966E"/>
+    <rect y="2" width="5" height="1" fill="#D62612"/>
+  </symbol>
+  <symbol id="i-bigben" viewBox="0 0 10 20">
+    <path d="M5 0l2 4.5H3z M3 4.5h4V7H3z M2 7h6v5.5H2z M3 12.5h4V20H3z" fill="currentColor"/>
+    <circle cx="5" cy="9.7" r="1.5" fill="#fff"/>
+  </symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-cross" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4.5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z" fill="currentColor"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.8.6 1.1 1.4 1.1 2.2h5c0-.8.3-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.2v13.6L19 12z" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="5" width="4.2" height="14" rx="1.2" fill="currentColor"/><rect x="13.8" y="5" width="4.2" height="14" rx="1.2" fill="currentColor"/></symbol>
+  <symbol id="i-restart" viewBox="0 0 24 24"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4.5v4h4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M4.5 20.5c1-4 4-6 7.5-6s6.5 2 7.5 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+</svg>
+
+<div class="tube-stripe" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand__mark" aria-hidden="true"></span>
+    <span class="brand__text" data-i18n="brand">Лондон &amp; Англия</span>
+  </div>
+  <button class="lang-switch" id="lang-switch" type="button" role="switch" aria-checked="false" aria-label="English">
+    <span class="lang-switch__opt is-on" data-lang-opt="bg">
+      <svg class="lang-switch__flag" viewBox="0 0 5 3" aria-hidden="true"><use href="#flag-bg"/></svg>BG
+    </span>
+    <span class="lang-switch__track" aria-hidden="true"><span class="lang-switch__knob"></span></span>
+    <span class="lang-switch__opt" data-lang-opt="en">
+      <svg class="lang-switch__flag" viewBox="0 0 60 30" preserveAspectRatio="none" aria-hidden="true"><use href="#flag-uk"/></svg>EN
+    </span>
+  </button>
+</header>
+
+<main class="app">
+
+  <!-- ========== Екран 1: Начало ========== -->
+  <section class="screen" id="screen-start" data-screen="start">
+    <div class="poster">
+      <div class="poster__art" aria-hidden="true">
+        <div class="art__sun"></div>
+        <div class="art__cloud art__cloud--1"></div>
+        <div class="art__cloud art__cloud--2"></div>
+
+        <!-- Силуетът на Лондон -->
+        <svg class="art__skyline" viewBox="0 0 600 230" preserveAspectRatio="xMidYMax meet">
+          <g fill="#9DC1DA">
+            <polygon points="418,212 442,26 452,44 470,212"/>
+            <path d="M384 212 C378 150 386 104 400 92 C414 104 422 150 416 212 Z"/>
+            <rect x="296" y="150" width="30" height="62"/>
+            <rect x="500" y="140" width="22" height="72"/>
+            <rect x="14" y="156" width="28" height="56"/>
+            <rect x="196" y="168" width="22" height="44"/>
+            <rect x="578" y="150" width="22" height="62"/>
+          </g>
+          <g fill="#13213F">
+            <!-- Биг Бен -->
+            <polygon points="62,6 72,44 52,44"/>
+            <rect x="52" y="44" width="20" height="13"/>
+            <rect x="48" y="57" width="28" height="30" rx="1"/>
+            <rect x="52" y="87" width="20" height="125"/>
+            <!-- Парламентът -->
+            <rect x="72" y="158" width="118" height="54"/>
+            <path d="M76 158l3-10 3 10zM92 158l3-10 3 10zM108 158l3-10 3 10zM124 158l3-10 3 10zM140 158l3-10 3 10zM156 158l3-10 3 10z"/>
+            <rect x="168" y="116" width="24" height="96"/>
+            <path d="M168 116l3-10 3 10zM189 116l-3-10-3 10z"/>
+            <!-- Катедралата „Сейнт Пол“ -->
+            <rect x="322" y="168" width="56" height="44"/>
+            <rect x="330" y="148" width="40" height="20"/>
+            <path d="M330 148 Q350 104 370 148 Z"/>
+            <rect x="347" y="112" width="6" height="16"/>
+            <circle cx="350" cy="109" r="3"/>
+            <rect x="316" y="150" width="10" height="62"/>
+            <rect x="374" y="150" width="10" height="62"/>
+            <path d="M316 150l5-10 5 10zM374 150l5-10 5 10z"/>
+            <!-- Тауър Бридж -->
+            <rect x="488" y="104" width="22" height="108"/>
+            <rect x="556" y="104" width="22" height="108"/>
+            <polygon points="486,104 499,76 512,104"/>
+            <polygon points="554,104 567,76 580,104"/>
+            <path d="M486 104l2-12 2 12zM508 104l2-12 2 12zM554 104l2-12 2 12zM576 104l2-12 2 12z"/>
+            <rect x="510" y="110" width="46" height="7"/>
+            <rect x="436" y="168" width="164" height="7"/>
+          </g>
+          <path d="M436 168 Q468 118 488 112 M578 112 Q594 118 600 132" fill="none" stroke="#13213F" stroke-width="3"/>
+          <g fill="#F5EEE1">
+            <rect x="494" y="120" width="10" height="14" rx="5"/>
+            <rect x="562" y="120" width="10" height="14" rx="5"/>
+          </g>
+          <!-- Часовникът на Биг Бен -->
+          <circle cx="62" cy="72" r="9.5" fill="#FFF2CC"/>
+          <path d="M62 72V65.5M62 72l5 2.5" stroke="#13213F" stroke-width="1.8" stroke-linecap="round"/>
+          <!-- Лондонското око (бавно се върти) -->
+          <path d="M250 122 L224 212 M250 122 L276 212" stroke="#13213F" stroke-width="4"/>
+          <g class="eye-wheel" fill="none" stroke="#13213F">
+            <circle cx="250" cy="122" r="58" stroke-width="3"/>
+            <circle cx="250" cy="122" r="51" stroke-width="1"/>
+            <g stroke-width="1">
+              <line x1="250" y1="64" x2="250" y2="180"/>
+              <line x1="250" y1="64" x2="250" y2="180" transform="rotate(22.5 250 122)"/>
+              <line x1="250" y1="64" x2="250" y2="180" transform="rotate(45 250 122)"/>
+              <line x1="250" y1="64" x2="250" y2="180" transform="rotate(67.5 250 122)"/>
+              <line x1="250" y1="64" x2="250" y2="180" transform="rotate(90 250 122)"/>
+              <line x1="250" y1="64" x2="250" y2="180" transform="rotate(112.5 250 122)"/>
+              <line x1="250" y1="64" x2="250" y2="180" transform="rotate(135 250 122)"/>
+              <line x1="250" y1="64" x2="250" y2="180" transform="rotate(157.5 250 122)"/>
+            </g>
+            <g fill="#13213F" stroke="none">
+              <circle cx="250" cy="64" r="3.8"/>
+              <circle cx="250" cy="64" r="3.8" transform="rotate(22.5 250 122)"/>
+              <circle cx="250" cy="64" r="3.8" transform="rotate(45 250 122)"/>
+              <circle cx="250" cy="64" r="3.8" transform="rotate(67.5 250 122)"/>
+              <circle cx="250" cy="64" r="3.8" transform="rotate(90 250 122)"/>
+              <circle cx="250" cy="64" r="3.8" transform="rotate(112.5 250 122)"/>
+              <circle cx="250" cy="64" r="3.8" transform="rotate(135 250 122)"/>
+              <circle cx="250" cy="64" r="3.8" transform="rotate(157.5 250 122)"/>
+              <circle cx="250" cy="64" r="3.8" transform="rotate(180 250 122)"/>
+              <circle cx="250" cy="64" r="3.8" transform="rotate(202.5 250 122)"/>
+              <circle cx="250" cy="64" r="3.8" transform="rotate(225 250 122)"/>
+              <circle cx="250" cy="64" r="3.8" transform="rotate(247.5 250 122)"/>
+              <circle cx="250" cy="64" r="3.8" transform="rotate(270 250 122)"/>
+              <circle cx="250" cy="64" r="3.8" transform="rotate(292.5 250 122)"/>
+              <circle cx="250" cy="64" r="3.8" transform="rotate(315 250 122)"/>
+              <circle cx="250" cy="64" r="3.8" transform="rotate(337.5 250 122)"/>
+              <circle cx="250" cy="122" r="5"/>
+            </g>
+          </g>
+          <!-- Темза -->
+          <rect x="0" y="212" width="600" height="18" fill="#5B8DB8"/>
+          <path d="M6 219h600M-10 225h600" stroke="#fff" stroke-opacity=".5" stroke-width="2" stroke-dasharray="16 20"/>
+        </svg>
+
+        <div class="art__road"></div>
+        <div class="art__bus" id="poster-bus"></div>
+      </div>
+
+      <div class="poster__body">
+        <p class="eyebrow" data-i18n="start.eyebrow">Викторина · 15 въпроса</p>
+        <h1 class="title" data-i18n-html="start.title">Колко знаеш за <em>Лондон</em> и <em>Англия</em>?</h1>
+        <p class="lead" data-i18n="start.lead"></p>
+
+        <form class="form" id="start-form" novalidate autocomplete="off">
+          <label class="field">
+            <span data-i18n="start.name"></span>
+            <input id="player-name" type="text" maxlength="30" data-i18n-placeholder="start.namePh">
+          </label>
+          <label class="field">
+            <span data-i18n="start.grade"></span>
+            <input id="player-grade" type="text" maxlength="10" data-i18n-placeholder="start.gradePh">
+          </label>
+          <p class="form__error" id="start-error" aria-live="polite"></p>
+          <button class="btn btn--primary btn--big" type="submit">
+            <span data-i18n="start.go"></span>
+            <svg class="btn__arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Екран 2: Въпросите ========== -->
+  <section class="screen" id="screen-quiz" data-screen="quiz">
+    <div class="route" id="route" aria-hidden="true">
+      <div class="route__inner">
+        <div class="route__road"></div>
+        <div class="route__track" id="route-track">
+          <div class="route__bus" id="route-bus"></div>
+        </div>
+        <div class="route__finish" id="route-finish"></div>
+      </div>
+    </div>
+
+    <div class="quiz-meta">
+      <span class="counter" id="quiz-counter"></span>
+      <span id="quiz-tag"></span>
+      <span class="points" id="quiz-points">
+        <svg aria-hidden="true"><use href="#i-star"/></svg>
+        <span id="quiz-points-text"></span>
+      </span>
+    </div>
+
+    <article class="qcard" id="qcard" aria-live="polite"></article>
+  </section>
+
+  <!-- ========== Екран 3: Резултат ========== -->
+  <section class="screen" id="screen-result" data-screen="result">
+    <div class="result-hero">
+      <svg class="result-hero__flag" viewBox="0 0 60 30" preserveAspectRatio="none" aria-hidden="true"><use href="#flag-uk"/></svg>
+      <div class="score" id="score">
+        <svg class="score__ring" viewBox="0 0 120 120" aria-hidden="true">
+          <circle class="score__track" cx="60" cy="60" r="52"/>
+          <circle class="score__fill" id="score-fill" cx="60" cy="60" r="52"/>
+        </svg>
+        <div class="score__num"><b id="score-num">0</b><span id="score-total">/ 15</span></div>
+      </div>
+      <div>
+        <p class="eyebrow" data-i18n="result.eyebrow"></p>
+        <h1 class="title" id="result-headline"></h1>
+        <p class="result-hero__sub"><span id="result-grade"></span><span id="result-score"></span></p>
+        <div class="rank" id="rank">
+          <span class="rank__icon" id="rank-icon"></span>
+          <span>
+            <span class="rank__title" id="rank-title"></span>
+            <span class="rank__note" id="rank-note"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <section class="section" aria-labelledby="symbols-title">
+      <h2 class="section-title" id="symbols-title" data-i18n="symbols.title"></h2>
+      <p class="section-lead" data-i18n="symbols.lead"></p>
+      <div class="symbols">
+        <article class="symbol-card">
+          <h3 class="symbol-card__title" data-i18n="symbols.england"></h3>
+          <div class="symbol-card__row">
+            <figure class="symbol">
+              <div class="symbol__visual"><svg class="symbol__flag" viewBox="0 0 50 30" aria-hidden="true"><use href="#flag-en"/></svg></div>
+              <figcaption data-i18n="symbols.flagEn"></figcaption>
+            </figure>
+            <figure class="symbol">
+              <div class="symbol__visual"><img class="symbol__arms" src="{{ARMS_ENGLAND}}" alt="" data-i18n-alt="symbols.armsEnAlt"></div>
+              <figcaption data-i18n="symbols.armsEn"></figcaption>
+            </figure>
+          </div>
+        </article>
+        <article class="symbol-card">
+          <h3 class="symbol-card__title" data-i18n="symbols.uk"></h3>
+          <div class="symbol-card__row">
+            <figure class="symbol">
+              <div class="symbol__visual"><svg class="symbol__flag" viewBox="0 0 60 30" aria-hidden="true"><use href="#flag-uk"/></svg></div>
+              <figcaption data-i18n="symbols.flagUk"></figcaption>
+            </figure>
+            <figure class="symbol">
+              <div class="symbol__visual"><img class="symbol__arms" src="{{ARMS_UK}}" alt="" data-i18n-alt="symbols.armsUkAlt"></div>
+              <figcaption data-i18n="symbols.armsUk"></figcaption>
+            </figure>
+          </div>
+        </article>
+      </div>
+
+      <!-- Плейър за химна -->
+      <div class="anthem" id="anthem">
+        <button class="anthem__btn" id="anthem-btn" type="button" aria-pressed="false">
+          <svg class="anthem__icon-play" aria-hidden="true"><use href="#i-play"/></svg>
+          <svg class="anthem__icon-pause" aria-hidden="true"><use href="#i-pause"/></svg>
+        </button>
+        <div>
+          <div class="anthem__head">
+            <h3 class="anthem__title" data-i18n="anthem.title"></h3>
+            <span class="anthem__eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          </div>
+          <p class="anthem__by" data-i18n="anthem.by"></p>
+          <div class="anthem__bar">
+            <input class="anthem__range" id="anthem-range" type="range" min="0" max="100" step="0.1" value="0" data-i18n-aria="anthem.seek">
+            <span class="anthem__time" id="anthem-time">0:00 / 0:00</span>
+          </div>
+        </div>
+        <p class="anthem__fact" data-i18n="anthem.fact"></p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="review-title">
+      <h2 class="section-title" id="review-title" data-i18n="review.title"></h2>
+      <p class="section-lead" data-i18n="review.lead"></p>
+      <ol class="review" id="review"></ol>
+    </section>
+
+    <div class="result-actions">
+      <button class="btn btn--primary btn--big" type="button" data-action="again">
+        <svg aria-hidden="true"><use href="#i-restart"/></svg>
+        <span data-i18n="actions.again"></span>
+      </button>
+      <button class="btn btn--ghost btn--big" type="button" data-action="new-player">
+        <svg aria-hidden="true"><use href="#i-user"/></svg>
+        <span data-i18n="actions.newPlayer"></span>
+      </button>
+    </div>
+    <p class="credits" data-i18n="credits"></p>
+  </section>
+
+  <noscript><p>За да работи играта, трябва да е включен JavaScript. / Please enable JavaScript to play.</p></noscript>
+</main>
+
+<!-- Химнът (вграден запис, работи без интернет) -->
+<script type="application/octet-stream" id="anthem-data">{{ANTHEM_MP3_BASE64}}</script>
+
+<script>
+(() => {
+  'use strict';
+
+  /* ================= Константи ================= */
+  const LANG = Object.freeze({ BG: 'bg', EN: 'en' });
+  const SCREEN = Object.freeze({ START: 'start', QUIZ: 'quiz', RESULT: 'result' });
+  const CATEGORY = Object.freeze({ LONDON: 'london', ENGLAND: 'england' });
+  const ACTION = Object.freeze({ AGAIN: 'again', NEW_PLAYER: 'new-player', NEXT: 'next' });
+  const CLS = Object.freeze({
+    ACTIVE: 'is-active',
+    ENTERING: 'is-entering',
+    CORRECT: 'is-correct',
+    WRONG: 'is-wrong',
+    PICKED: 'is-picked',
+    DIM: 'is-dim',
+    DRIVING: 'is-driving',
+    LEAVING: 'is-leaving',
+    PLAYING: 'is-playing',
+    INVALID: 'is-invalid',
+    ON: 'is-on',
+    BUMP: 'is-bump',
+    NO_ANIM: 'no-anim',
+  });
+  const SEL = Object.freeze({
+    SCREEN: '[data-screen]',
+    LANG_SWITCH: '#lang-switch',
+    LANG_OPT: '[data-lang-opt]',
+    START_FORM: '#start-form',
+    NAME: '#player-name',
+    GRADE: '#player-grade',
+    START_ERROR: '#start-error',
+    POSTER_BUS: '#poster-bus',
+    ROUTE: '#route',
+    ROUTE_TRACK: '#route-track',
+    ROUTE_BUS: '#route-bus',
+    ROUTE_FINISH: '#route-finish',
+    COUNTER: '#quiz-counter',
+    TAG: '#quiz-tag',
+    POINTS: '#quiz-points',
+    POINTS_TEXT: '#quiz-points-text',
+    QCARD: '#qcard',
+    ANSWER: '.answer',
+    ACTION: '[data-action]',
+    BUS_SVG: '.bus',
+    SCORE_FILL: '#score-fill',
+    SCORE_NUM: '#score-num',
+    SCORE_TOTAL: '#score-total',
+    HEADLINE: '#result-headline',
+    RESULT_GRADE: '#result-grade',
+    RESULT_SCORE: '#result-score',
+    RANK_ICON: '#rank-icon',
+    RANK_TITLE: '#rank-title',
+    RANK_NOTE: '#rank-note',
+    REVIEW: '#review',
+    ANTHEM: '#anthem',
+    ANTHEM_BTN: '#anthem-btn',
+    ANTHEM_RANGE: '#anthem-range',
+    ANTHEM_TIME: '#anthem-time',
+    ANTHEM_DATA: '#anthem-data',
+  });
+  const I18N_ATTR = Object.freeze({
+    TEXT: 'data-i18n',
+    HTML: 'data-i18n-html',
+    PLACEHOLDER: 'data-i18n-placeholder',
+    ARIA: 'data-i18n-aria',
+    ALT: 'data-i18n-alt',
+  });
+  const ICON = Object.freeze({ CHECK: '#i-check', CROSS: '#i-cross', ARROW: '#i-arrow', BULB: '#i-bulb', BIGBEN: '#i-bigben', FLAG_EN: '#flag-en' });
+  const AUDIO_MIME = 'audio/mpeg';
+  const DRIVE_MS = 950;
+  const LEAVE_MS = 650;
+  const SCORE_ANIM_MS = 1300;
+  const SCORE_RADIUS = 52;
+  const OPTION_LETTERS = Object.freeze({ [LANG.BG]: ['А', 'Б', 'В'], [LANG.EN]: ['A', 'B', 'C'] });
+  const OPTION_KEYS = Object.freeze({ 1: 0, 2: 1, 3: 2, а: 0, б: 1, в: 2, a: 0, b: 1, c: 2 });
+  const NEXT_KEY = 'ArrowRight';
+
+  /* ================= Въпросите ================= */
+  // correct = номерът на верния отговор в списъка options (броим от 0)
+  const QUESTIONS = Object.freeze([
+    {
+      category: CATEGORY.LONDON,
+      text: { bg: 'Коя река минава през Лондон?', en: 'Which river flows through London?' },
+      options: [
+        { bg: 'Темза', en: 'The Thames' },
+        { bg: 'Сена', en: 'The Seine' },
+        { bg: 'Тибър', en: 'The Tiber' },
+      ],
+      correct: 0,
+      fact: {
+        bg: 'Темза е дълга 346 км и минава точно през центъра на Лондон. В града над нея има повече от 30 моста! Сена тече през Париж, а Тибър – през Рим.',
+        en: 'The Thames is 346 km long and flows right through the middle of London. More than 30 bridges cross it in the city! The Seine flows through Paris and the Tiber through Rome.',
+      },
+    },
+    {
+      category: CATEGORY.LONDON,
+      text: { bg: 'Къде се извършва коронацията на британските крале и кралици?', en: 'Where are British kings and queens crowned?' },
+      options: [
+        { bg: 'Катедралата „Сейнт Пол“', en: 'St Paul’s Cathedral' },
+        { bg: 'Музеят „Мадам Тюсо“', en: 'Madame Tussauds' },
+        { bg: 'Уестминстърското абатство', en: 'Westminster Abbey' },
+      ],
+      correct: 2,
+      fact: {
+        bg: 'Вече почти 1000 години – от 1066 г. – кралете и кралиците се коронясват в Уестминстърското абатство. Там е коронясан и крал Чарлз III през 2023 г. А „Мадам Тюсо“ е музей с восъчни фигури!',
+        en: 'For almost 1,000 years – since 1066 – kings and queens have been crowned in Westminster Abbey. King Charles III was crowned there in 2023. And Madame Tussauds is a museum of wax figures!',
+      },
+    },
+    {
+      category: CATEGORY.LONDON,
+      text: { bg: 'Вярно ли е, че първото метро в света е построено в Лондон?', en: 'Is it true that the world’s first underground railway was built in London?' },
+      options: [
+        { bg: 'Там няма метро', en: 'There’s no underground there' },
+        { bg: 'Да', en: 'Yes' },
+        { bg: 'Не', en: 'No' },
+      ],
+      correct: 1,
+      fact: {
+        bg: 'Лондонското метро е открито през 1863 г. – преди повече от 160 години! Лондончани му казват „Тюб“ (The Tube), което значи „тръба“, заради кръглите тунели.',
+        en: 'The London Underground opened in 1863 – more than 160 years ago! Londoners call it “the Tube” because of its round tunnels.',
+      },
+    },
+    {
+      category: CATEGORY.LONDON,
+      text: { bg: 'На кое място по население е Лондон сред градовете в Европа?', en: 'Where does London rank among Europe’s cities by population?' },
+      options: [
+        { bg: '3-то', en: '3rd' },
+        { bg: '1-во', en: '1st' },
+        { bg: '10-то', en: '10th' },
+      ],
+      correct: 0,
+      fact: {
+        bg: 'В Лондон живеят около 9 милиона души – повече, отколкото в цяла България! В Европа по-големи са само Истанбул и Москва.',
+        en: 'About 9 million people live in London – more than in the whole of Bulgaria! In Europe, only Istanbul and Moscow are bigger.',
+      },
+    },
+    {
+      category: CATEGORY.LONDON,
+      text: { bg: 'Кой е основал Лондон?', en: 'Who founded London?' },
+      options: [
+        { bg: 'Нидерландците', en: 'The Dutch' },
+        { bg: 'Римляните', en: 'The Romans' },
+        { bg: 'Французите', en: 'The French' },
+      ],
+      correct: 1,
+      fact: {
+        bg: 'Римляните основават града преди почти 2000 години и го наричат Лондиниум. Парчета от старата римска стена могат да се видят и днес!',
+        en: 'The Romans founded the city almost 2,000 years ago and called it Londinium. Pieces of the old Roman wall can still be seen today!',
+      },
+    },
+    {
+      category: CATEGORY.LONDON,
+      text: { bg: 'Кой е най-известният мост в Лондон?', en: 'What is the most famous bridge in London?' },
+      options: [
+        { bg: 'Лондонското око', en: 'The London Eye' },
+        { bg: 'Саутуорк Бридж', en: 'Southwark Bridge' },
+        { bg: 'Тауър Бридж', en: 'Tower Bridge' },
+      ],
+      correct: 2,
+      fact: {
+        bg: 'Тауър Бридж е открит през 1894 г. Средата му се вдига нагоре, за да минават високите кораби! А Лондонското око изобщо не е мост – то е огромно виенско колело.',
+        en: 'Tower Bridge opened in 1894. Its middle lifts up so tall ships can sail through! And the London Eye isn’t a bridge at all – it’s a giant Ferris wheel.',
+      },
+    },
+    {
+      category: CATEGORY.LONDON,
+      text: { bg: 'Коя е най-известната забележителност в Лондон?', en: 'What is London’s most famous landmark?' },
+      options: [
+        { bg: 'Биг Бен', en: 'Big Ben' },
+        { bg: 'Айфеловата кула', en: 'The Eiffel Tower' },
+        { bg: 'Колизеумът', en: 'The Colosseum' },
+      ],
+      correct: 0,
+      fact: {
+        bg: '„Биг Бен“ всъщност е името на огромната камбана в часовниковата кула – тя тежи над 13 тона! Самата кула се казва „Кулата на Елизабет“. Айфеловата кула е в Париж, а Колизеумът – в Рим.',
+        en: '“Big Ben” is actually the name of the huge bell inside the clock tower – it weighs more than 13 tonnes! The tower itself is called the Elizabeth Tower. The Eiffel Tower is in Paris and the Colosseum is in Rome.',
+      },
+    },
+    {
+      category: CATEGORY.LONDON,
+      text: { bg: 'Кое е най-известното традиционно ястие в Лондон?', en: 'What is London’s most famous traditional dish?' },
+      options: [
+        { bg: 'Суши', en: 'Sushi' },
+        { bg: 'Мусака', en: 'Moussaka' },
+        { bg: 'Фиш енд чипс', en: 'Fish and chips' },
+      ],
+      correct: 2,
+      fact: {
+        bg: 'Фиш енд чипс е риба в хрупкава панировка с пържени картофки. Англичаните я ядат от над 150 години, често с малко сол и оцет. Сушито идва от Япония, а мусаката я ядем и у нас!',
+        en: 'Fish and chips is fish in crispy batter with chunky fried potatoes. The English have eaten it for over 150 years, often with salt and vinegar. Sushi comes from Japan, and moussaka is a favourite in Bulgaria!',
+      },
+    },
+    {
+      category: CATEGORY.LONDON,
+      text: { bg: 'Кое е най-голямото летище в Лондон?', en: 'What is London’s biggest airport?' },
+      options: [
+        { bg: 'Лутън', en: 'Luton' },
+        { bg: 'Хийтроу', en: 'Heathrow' },
+        { bg: 'Гетуик', en: 'Gatwick' },
+      ],
+      correct: 1,
+      fact: {
+        bg: 'Хийтроу е най-голямото летище във Великобритания. Всяка година през него минават над 80 милиона пътници – повече от 10 пъти колкото са всички хора в България!',
+        en: 'Heathrow is the biggest airport in the United Kingdom. Over 80 million passengers travel through it every year – more than 10 times the number of people in Bulgaria!',
+      },
+    },
+    {
+      category: CATEGORY.LONDON,
+      text: { bg: 'С какво е известен Лондон?', en: 'What is London famous for?' },
+      options: [
+        { bg: 'Чистото море', en: 'Its clean sea' },
+        { bg: 'Дълбоките плувни басейни', en: 'Its deep swimming pools' },
+        { bg: 'Червените двуетажни автобуси, телефонни кабини и пощенски кутии', en: 'Red double-decker buses, phone boxes and post boxes' },
+      ],
+      correct: 2,
+      fact: {
+        bg: 'Червеното се вижда отдалече, дори в мъгла и дъжд – затова автобусите, телефонните кабини и пощенските кутии в Лондон са червени. А море в Лондон няма!',
+        en: 'Red is easy to spot from far away, even in fog and rain – that’s why London’s buses, phone boxes and post boxes are red. And London has no sea!',
+      },
+    },
+    {
+      category: CATEGORY.ENGLAND,
+      text: { bg: 'Как се нарича проливът, който отделя Обединеното кралство от континентална Европа?', en: 'What is the name of the sea that separates the United Kingdom from mainland Europe?' },
+      options: [
+        { bg: 'Ла Манш', en: 'The English Channel' },
+        { bg: 'Джърси', en: 'Jersey' },
+        { bg: 'Гринуичкият меридиан', en: 'The Greenwich Meridian' },
+      ],
+      correct: 0,
+      fact: {
+        bg: 'Под Ла Манш има тунел, дълъг 50 км! С влак през него се стига от Лондон до Париж за малко повече от 2 часа. Англичаните наричат пролива „Английския канал“.',
+        en: 'There is a 50 km tunnel under the English Channel! A train through it takes you from London to Paris in just over 2 hours. The French call it “La Manche”, which means “the sleeve”.',
+      },
+    },
+    {
+      category: CATEGORY.ENGLAND,
+      text: { bg: 'Кой е кралят на Англия днес?', en: 'Who is the King of England today?' },
+      options: [
+        { bg: 'Джордж VI', en: 'George VI' },
+        { bg: 'Уинстън Чърчил', en: 'Winston Churchill' },
+        { bg: 'Чарлз III', en: 'Charles III' },
+      ],
+      correct: 2,
+      fact: {
+        bg: 'Чарлз III става крал през 2022 г. след своята майка – кралица Елизабет II. Джордж VI е неговият дядо, а Уинстън Чърчил не е бил крал, а прочут министър-председател.',
+        en: 'Charles III became king in 2022 after his mother, Queen Elizabeth II. George VI was his grandfather, and Winston Churchill was never a king – he was a famous prime minister.',
+      },
+    },
+    {
+      category: CATEGORY.ENGLAND,
+      text: { bg: 'Колко десетилетия е управлявала кралица Елизабет II?', en: 'For how many decades did Queen Elizabeth II reign?' },
+      options: [
+        { bg: '1', en: '1' },
+        { bg: '7', en: '7' },
+        { bg: '6', en: '6' },
+      ],
+      correct: 1,
+      fact: {
+        bg: 'Кралица Елизабет II управлява цели 70 години – от 1952 до 2022 г. Никой друг британски монарх не е управлявал толкова дълго!',
+        en: 'Queen Elizabeth II reigned for 70 whole years – from 1952 to 2022. No other British monarch has ever reigned for so long!',
+      },
+    },
+    {
+      category: CATEGORY.ENGLAND,
+      text: { bg: 'Коя е най-дългата река във Великобритания?', en: 'What is the longest river in Great Britain?' },
+      options: [
+        { bg: 'Грейт Уз', en: 'The Great Ouse' },
+        { bg: 'Темза', en: 'The Thames' },
+        { bg: 'Севърн', en: 'The Severn' },
+      ],
+      correct: 2,
+      fact: {
+        bg: 'Река Севърн е дълга 354 км. Тя извира от планините на Уелс и тече през Англия. Темза е само малко по-къса – 346 км – и е най-дългата река, която тече само в Англия.',
+        en: 'The River Severn is 354 km long. It starts in the mountains of Wales and flows through England. The Thames is only a little shorter – 346 km – and it is the longest river that flows only through England.',
+      },
+    },
+    {
+      category: CATEGORY.ENGLAND,
+      text: { bg: 'Кой е най-големият национален парк в Англия?', en: 'What is England’s largest national park?' },
+      options: [
+        { bg: 'Лейк Дистрикт', en: 'The Lake District' },
+        { bg: 'Пийк Дистрикт', en: 'The Peak District' },
+        { bg: 'Уест Мидландс', en: 'The West Midlands' },
+      ],
+      correct: 0,
+      fact: {
+        bg: 'Лейк Дистрикт означава „Езерната област“. Там са най-голямото езеро в Англия – Уиндърмиър, и най-високият връх – Скафел Пайк (978 м). Пийк Дистрикт също е национален парк, но е по-малък.',
+        en: 'The Lake District means “the land of lakes”. It has England’s largest lake, Windermere, and its highest mountain, Scafell Pike (978 m). The Peak District is a national park too, but it’s smaller.',
+      },
+    },
+  ]);
+
+  /* ================= Титли според точките ================= */
+  const RANKS = Object.freeze([
+    {
+      min: 0.9, icon: '👑',
+      title: { bg: 'Кралски експерт', en: 'Royal Expert' },
+      headline: { bg: 'Невероятно, {name}!', en: 'Amazing, {name}!' },
+      note: { bg: 'Знаеш за Англия повече и от кралската гвардия!', en: 'You know more about England than the Royal Guard!' },
+    },
+    {
+      min: 0.65, icon: '🎩',
+      title: { bg: 'Лондонски гид', en: 'London Guide' },
+      headline: { bg: 'Браво, {name}!', en: 'Well done, {name}!' },
+      note: { bg: 'Вече можеш да разведеш приятелите си из Лондон!', en: 'You could show your friends around London!' },
+    },
+    {
+      min: 0.4, icon: '📷',
+      title: { bg: 'Любопитен турист', en: 'Curious Tourist' },
+      headline: { bg: 'Добра работа, {name}!', en: 'Good job, {name}!' },
+      note: { bg: 'Знаеш доста! Прочети фактите по-долу и ще знаеш още повече.', en: 'You know quite a lot! Read the facts below to learn even more.' },
+    },
+    {
+      min: 0, icon: '🧳',
+      title: { bg: 'Млад пътешественик', en: 'Young Traveller' },
+      headline: { bg: 'Хубаво начало, {name}!', en: 'Nice start, {name}!' },
+      note: { bg: 'Всеки голям пътешественик започва отнякъде. Прочети фактите и опитай пак!', en: 'Every great traveller starts somewhere. Read the facts and try again!' },
+    },
+  ]);
+
+  /* ================= Текстове на двата езика ================= */
+  const TEXT = Object.freeze({
+    [LANG.BG]: {
+      docTitle: 'Викторина: Лондон и Англия',
+      brand: 'Лондон & Англия',
+      'start.eyebrow': 'Викторина · {n} въпроса',
+      'start.title': 'Колко знаеш за <em>Лондон</em> и <em>Англия</em>?',
+      'start.lead': 'Качи се на червения автобус, отговори на {n} въпроса и стигни до Биг Бен!',
+      'start.name': 'Как се казваш?',
+      'start.namePh': 'Твоето име',
+      'start.grade': 'Клас',
+      'start.gradePh': 'напр. 4 Б',
+      'start.go': 'Тръгваме!',
+      'start.errName': 'Напиши името си, за да тръгнем.',
+      'start.errGrade': 'Напиши и в кой клас си.',
+      'quiz.counter': 'Въпрос <b>{i}</b> от {n}',
+      'quiz.points': 'Точки: {s}',
+      'quiz.hint': 'Избери отговор – можеш и с клавишите 1, 2 и 3.',
+      'quiz.correct': 'Браво, вярно! +1 точка',
+      'quiz.wrong': 'Опа! Верният отговор е „{a}“.',
+      'quiz.next': 'Следващ въпрос',
+      'quiz.finish': 'Виж резултата',
+      'cat.london': 'Лондон',
+      'cat.england': 'Англия',
+      'result.eyebrow': 'Финал! Автобусът стигна до Биг Бен',
+      'result.grade': 'Клас: {g}',
+      'result.score': ({ s, n }) => `Ти събра ${s} от ${n} ${s === 1 ? 'точка' : 'точки'}`,
+      'symbols.title': 'Знамена, гербове и химн',
+      'symbols.lead': 'Англия е една от четирите части на Обединеното кралство (Великобритания), заедно с Шотландия, Уелс и Северна Ирландия. Затова Англия има свое знаме и герб, а цялото кралство – свои.',
+      'symbols.england': 'Англия',
+      'symbols.uk': 'Обединеното кралство',
+      'symbols.flagEn': 'Знамето на Англия – червеният кръст на Свети Георги',
+      'symbols.armsEn': 'Гербът на Англия – три златни лъва. Три лъва има и на емблемата на английския футболен отбор!',
+      'symbols.armsEnAlt': 'Гербът на Англия с три златни лъва',
+      'symbols.flagUk': '„Юниън Джак“ – в него са събрани кръстовете на Англия, Шотландия и Ирландия',
+      'symbols.armsUk': 'Кралският герб – лъвът е символ на Англия, а еднорогът – на Шотландия',
+      'symbols.armsUkAlt': 'Кралският герб на Обединеното кралство с лъв и еднорог',
+      'anthem.title': 'Химнът: „Боже, пази краля“',
+      'anthem.by': 'God Save the King · свири оркестърът на американския военноморски флот',
+      'anthem.play': 'Пусни химна',
+      'anthem.pause': 'Спри химна',
+      'anthem.seek': 'Превърти химна',
+      'anthem.fact': 'Англия няма свой отделен химн – на мачове и празници англичаните пеят химна на цялото кралство. Когато на трона има кралица, той се пее „Боже, пази кралицата“.',
+      'review.title': 'Верните отговори',
+      'review.lead': 'Прочети интересните факти – така ще запомниш още повече!',
+      'review.correct': 'Верен отговор:',
+      'review.yours': 'Твоят отговор:',
+      'review.ok': 'Вярно',
+      'review.bad': 'Грешно',
+      'review.fact': 'Интересно:',
+      'actions.again': 'Играй пак',
+      'actions.newPlayer': 'Нов играч',
+      credits: 'Гербовете: Sodacan / Wikimedia Commons (CC BY-SA). Химнът: U.S. Navy Band / Wikimedia Commons (обществено достояние). Шрифтове: Unbounded и Nunito (SIL Open Font License).',
+    },
+    [LANG.EN]: {
+      docTitle: 'Quiz: London & England',
+      brand: 'London & England',
+      'start.eyebrow': 'Quiz · {n} questions',
+      'start.title': 'How much do you know about <em>London</em> and <em>England</em>?',
+      'start.lead': 'Hop on the red bus, answer {n} questions and ride all the way to Big Ben!',
+      'start.name': 'What’s your name?',
+      'start.namePh': 'Your name',
+      'start.grade': 'Class',
+      'start.gradePh': 'e.g. 4B',
+      'start.go': 'Let’s go!',
+      'start.errName': 'Type your name so we can start.',
+      'start.errGrade': 'Type your class too.',
+      'quiz.counter': 'Question <b>{i}</b> of {n}',
+      'quiz.points': 'Points: {s}',
+      'quiz.hint': 'Pick an answer – you can also press 1, 2 or 3.',
+      'quiz.correct': 'Well done, that’s right! +1 point',
+      'quiz.wrong': 'Oops! The right answer is “{a}”.',
+      'quiz.next': 'Next question',
+      'quiz.finish': 'See my score',
+      'cat.london': 'London',
+      'cat.england': 'England',
+      'result.eyebrow': 'Finish! The bus made it to Big Ben',
+      'result.grade': 'Class: {g}',
+      'result.score': ({ s, n }) => `You scored ${s} out of ${n} ${s === 1 ? 'point' : 'points'}`,
+      'symbols.title': 'Flags, coats of arms and anthem',
+      'symbols.lead': 'England is one of the four parts of the United Kingdom (Great Britain), together with Scotland, Wales and Northern Ireland. That’s why England has its own flag and coat of arms, and the whole kingdom has its own too.',
+      'symbols.england': 'England',
+      'symbols.uk': 'The United Kingdom',
+      'symbols.flagEn': 'England’s flag – the red cross of Saint George',
+      'symbols.armsEn': 'England’s coat of arms – three golden lions. Three lions are also on the England football team’s badge!',
+      'symbols.armsEnAlt': 'The coat of arms of England with three golden lions',
+      'symbols.flagUk': 'The Union Jack – it combines the crosses of England, Scotland and Ireland',
+      'symbols.armsUk': 'The Royal coat of arms – the lion stands for England and the unicorn for Scotland',
+      'symbols.armsUkAlt': 'The Royal coat of arms of the United Kingdom with a lion and a unicorn',
+      'anthem.title': 'The anthem: “God Save the King”',
+      'anthem.by': 'Performed by the U.S. Navy Band',
+      'anthem.play': 'Play the anthem',
+      'anthem.pause': 'Pause the anthem',
+      'anthem.seek': 'Move through the anthem',
+      'anthem.fact': 'England doesn’t have an anthem of its own – at matches and celebrations the English sing the anthem of the whole kingdom. When a queen is on the throne, it is sung as “God Save the Queen”.',
+      'review.title': 'The right answers',
+      'review.lead': 'Read the fun facts – they’ll help you remember even more!',
+      'review.correct': 'Right answer:',
+      'review.yours': 'Your answer:',
+      'review.ok': 'Correct',
+      'review.bad': 'Wrong',
+      'review.fact': 'Fun fact:',
+      'actions.again': 'Play again',
+      'actions.newPlayer': 'New player',
+      credits: 'Coats of arms: Sodacan / Wikimedia Commons (CC BY-SA). Anthem: U.S. Navy Band / Wikimedia Commons (public domain). Fonts: Unbounded and Nunito (SIL Open Font License).',
+    },
+  });
+
+  const CATEGORY_VIEW = Object.freeze({
+    [CATEGORY.LONDON]: { labelKey: 'cat.london', icon: ICON.BIGBEN, viewBox: '0 0 10 20' },
+    [CATEGORY.ENGLAND]: { labelKey: 'cat.england', icon: ICON.FLAG_EN, viewBox: '0 0 50 30' },
+  });
+
+  /* ================= Картинки на автобуса и Биг Бен ================= */
+  const BUS_SVG = `
+    <svg class="bus" viewBox="0 0 120 84" aria-hidden="true">
+      <circle class="puff" cx="3" cy="66" r="4.5" fill="#B8BFCC"/>
+      <circle class="puff puff--2" cx="3" cy="64" r="3.2" fill="#C9CED8"/>
+      <ellipse cx="60" cy="80.5" rx="50" ry="3.2" fill="rgba(0,0,0,.22)"/>
+      <g class="bus__body">
+        <path d="M8 16C8 8.3 12.3 4 20 4h82c7.7 0 12 4.3 12 12v52c0 2.2-1.8 4-4 4H12c-2.2 0-4-1.8-4-4z" fill="#D7192D"/>
+        <path d="M15 7h88" stroke="#F25A68" stroke-width="2" stroke-linecap="round"/>
+        <rect x="8" y="36" width="106" height="4.5" fill="#F3E0A6"/>
+        <g fill="#CFE5F2">
+          <rect x="14" y="12" width="17" height="18" rx="3"/>
+          <rect x="35" y="12" width="17" height="18" rx="3"/>
+          <rect x="56" y="12" width="17" height="18" rx="3"/>
+          <rect x="77" y="12" width="15" height="18" rx="3"/>
+          <rect x="96" y="24" width="14" height="6" rx="1.5"/>
+          <rect x="35" y="46" width="17" height="14" rx="3"/>
+          <rect x="56" y="46" width="17" height="14" rx="3"/>
+          <rect x="77" y="46" width="13" height="14" rx="3"/>
+          <rect x="97" y="44" width="13" height="18" rx="2.5"/>
+        </g>
+        <g fill="#fff" opacity=".55">
+          <path d="M16 14h4l-4 6z"/><path d="M37 14h4l-4 6z"/><path d="M58 14h4l-4 6z"/><path d="M79 14h4l-4 6z"/>
+        </g>
+        <rect x="13" y="44" width="17" height="27" rx="2" fill="#A8101F"/>
+        <rect x="20.5" y="46" width="2" height="24" rx="1" fill="#F3E0A6"/>
+        <rect x="96" y="11" width="14" height="10" rx="2" fill="#1B2233"/>
+        <text x="103" y="18.6" text-anchor="middle" font-size="7.5" font-weight="800" fill="#FFD166" font-family="Unbounded, Nunito, sans-serif">15</text>
+        <circle cx="111" cy="66.5" r="2.4" fill="#FFE08A"/>
+        <circle cx="30" cy="70" r="12" fill="#A8101F"/>
+        <circle cx="92" cy="70" r="12" fill="#A8101F"/>
+      </g>
+      <g transform="translate(30 70)">
+        <g class="wheel">
+          <circle r="10" fill="#1B2233"/>
+          <circle r="5.2" fill="#C9CED8"/>
+          <path d="M0-5v10M-5 0h10" stroke="#1B2233" stroke-width="1.6"/>
+        </g>
+      </g>
+      <g transform="translate(92 70)">
+        <g class="wheel">
+          <circle r="10" fill="#1B2233"/>
+          <circle r="5.2" fill="#C9CED8"/>
+          <path d="M0-5v10M-5 0h10" stroke="#1B2233" stroke-width="1.6"/>
+        </g>
+      </g>
+    </svg>`;
+
+  const BIG_BEN_SVG = `
+    <svg viewBox="0 0 40 100" aria-hidden="true">
+      <polygon points="20,0 26,20 14,20" fill="#13213F"/>
+      <rect x="14" y="20" width="12" height="9" fill="#13213F"/>
+      <rect x="11" y="29" width="18" height="20" rx="1" fill="#13213F"/>
+      <circle cx="20" cy="39" r="6.5" fill="#FFF2CC"/>
+      <path d="M20 39v-4.5M20 39l3.2 1.6" stroke="#13213F" stroke-width="1.4" stroke-linecap="round"/>
+      <rect x="13" y="49" width="14" height="51" fill="#13213F"/>
+      <path d="M16.5 55v40M20 55v40M23.5 55v40" stroke="#2C3E66" stroke-width="1"/>
+    </svg>`;
+
+  /* ================= Помощни функции ================= */
+  const $ = (sel, root = document) => root.querySelector(sel);
+  const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+
+  const format = (template, vars = {}) =>
+    template.replace(/\{(\w+)\}/g, (match, key) => (key in vars ? String(vars[key]) : match));
+
+  const tr = (lang, key, vars) => {
+    const entry = TEXT[lang][key] ?? TEXT[LANG.BG][key] ?? key;
+    return typeof entry === 'function' ? entry(vars) : format(entry, vars);
+  };
+
+  const HTML_ESCAPES = Object.freeze({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' });
+  const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (ch) => HTML_ESCAPES[ch]);
+
+  const range = (n) => Array.from({ length: n }, (_, i) => i);
+
+  // Разбъркване „като тесте карти“ (алгоритъм на Фишер–Йейтс)
+  const shuffle = (list) => {
+    const copy = [...list];
+    for (let i = copy.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  };
+
+  const sameOrder = (a, b) => a.length === b.length && a.every((v, i) => v === b[i]);
+
+  // Нова подредба, различна от предишната игра
+  const createOrder = (previous) => {
+    let order = shuffle(range(QUESTIONS.length));
+    while (sameOrder(order, previous)) order = shuffle(order);
+    return order;
+  };
+
+  const createGame = (previousOrder = []) => {
+    const order = createOrder(previousOrder);
+    const optionOrder = Object.fromEntries(
+      order.map((q) => [q, shuffle(range(QUESTIONS[q].options.length))]),
+    );
+    return { order, optionOrder, current: 0, answers: {} };
+  };
+
+  const isCorrect = (qIndex, chosen) => QUESTIONS[qIndex].correct === chosen;
+  const countAnswered = (answers) => Object.keys(answers).length;
+  const countScore = (answers) =>
+    Object.entries(answers).filter(([q, chosen]) => isCorrect(Number(q), chosen)).length;
+  const getRank = (score, total) => RANKS.find((rank) => score / total >= rank.min);
+
+  const formatTime = (seconds) => {
+    const s = Math.max(0, Math.floor(Number.isFinite(seconds) ? seconds : 0));
+    return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+  };
+
+  const restartAnimation = (el, cls) => {
+    el.classList.remove(cls);
+    void el.offsetWidth; // кара браузъра да „забрави“ старата анимация
+    el.classList.add(cls);
+  };
+
+  const iconHtml = (href, cls = '', viewBox = '0 0 24 24') =>
+    `<svg class="${cls}" viewBox="${viewBox}" aria-hidden="true"><use href="${href}"/></svg>`;
+
+  const tagHtml = (category, lang) => {
+    const view = CATEGORY_VIEW[category];
+    return `<span class="tag tag--${category}">${iconHtml(view.icon, 'tag__icon', view.viewBox)}${escapeHtml(tr(lang, view.labelKey))}</span>`;
+  };
+
+  /* ================= Състояние на играта ================= */
+  const createStore = (initial) => {
+    let state = initial;
+    const listeners = [];
+    return {
+      get: () => state,
+      update: (patch) => {
+        const prev = state;
+        state = { ...state, ...(typeof patch === 'function' ? patch(state) : patch) };
+        listeners.forEach((fn) => fn(state, prev));
+      },
+      subscribe: (fn) => listeners.push(fn),
+    };
+  };
+
+  /* ================= Звуци (създават се от браузъра, без файлове) ================= */
+  const createSfx = () => {
+    let ctx = null;
+    const getCtx = () => {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return null;
+      ctx = ctx || new AudioCtx();
+      if (ctx.state === 'suspended') ctx.resume();
+      return ctx;
+    };
+    const tone = ({ freq, at = 0, dur = 0.15, type = 'sine', vol = 0.18, slideTo }) => {
+      const c = getCtx();
+      if (!c) return;
+      const start = c.currentTime + at;
+      const osc = c.createOscillator();
+      const gain = c.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, start);
+      if (slideTo) osc.frequency.exponentialRampToValueAtTime(slideTo, start + dur);
+      gain.gain.setValueAtTime(0.0001, start);
+      gain.gain.exponentialRampToValueAtTime(vol, start + 0.015);
+      gain.gain.exponentialRampToValueAtTime(0.0001, start + dur);
+      osc.connect(gain).connect(c.destination);
+      osc.start(start);
+      osc.stop(start + dur + 0.05);
+    };
+    const play = (notes) => notes.forEach(tone);
+    return {
+      correct: () => play([
+        { freq: 659, dur: 0.14 },
+        { freq: 880, at: 0.1, dur: 0.16 },
+        { freq: 1319, at: 0.2, dur: 0.32 },
+      ]),
+      wrong: () => play([
+        { freq: 330, dur: 0.2, type: 'triangle', slideTo: 260 },
+        { freq: 247, at: 0.18, dur: 0.34, type: 'triangle', slideTo: 180 },
+      ]),
+      horn: () => play([
+        { freq: 392, dur: 0.14, type: 'square', vol: 0.05 },
+        { freq: 494, dur: 0.14, type: 'square', vol: 0.05 },
+        { freq: 392, at: 0.2, dur: 0.24, type: 'square', vol: 0.05 },
+        { freq: 494, at: 0.2, dur: 0.24, type: 'square', vol: 0.05 },
+      ]),
+    };
+  };
+
+  /* ================= Плейър за химна ================= */
+  const createAnthemPlayer = ({ root, sourceEl }) => {
+    const audio = new Audio();
+    audio.preload = 'metadata';
+    const btn = $(SEL.ANTHEM_BTN, root);
+    const slider = $(SEL.ANTHEM_RANGE, root);
+    const time = $(SEL.ANTHEM_TIME, root);
+    let loaded = false;
+    let lang = LANG.BG;
+
+    // Превръща вградения текст (base64) обратно в аудио файл
+    const load = () => {
+      if (loaded) return;
+      loaded = true;
+      const binary = atob(sourceEl.textContent.replace(/\s+/g, ''));
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
+      audio.src = URL.createObjectURL(new Blob([bytes], { type: AUDIO_MIME }));
+    };
+
+    const sync = () => {
+      const duration = Number.isFinite(audio.duration) ? audio.duration : 0;
+      const pct = duration ? (audio.currentTime / duration) * 100 : 0;
+      slider.value = String(pct);
+      slider.style.setProperty('--fill', `${pct}%`);
+      time.textContent = `${formatTime(audio.currentTime)} / ${formatTime(duration)}`;
+    };
+
+    const syncButton = () => {
+      const playing = !audio.paused;
+      root.classList.toggle(CLS.PLAYING, playing);
+      btn.setAttribute('aria-pressed', String(playing));
+      btn.setAttribute('aria-label', tr(lang, playing ? 'anthem.pause' : 'anthem.play'));
+    };
+
+    audio.addEventListener('play', syncButton);
+    audio.addEventListener('pause', syncButton);
+    audio.addEventListener('timeupdate', sync);
+    audio.addEventListener('loadedmetadata', sync);
+    audio.addEventListener('ended', () => {
+      audio.currentTime = 0;
+      sync();
+    });
+
+    btn.addEventListener('click', () => {
+      load();
+      if (audio.paused) audio.play().catch(() => {});
+      else audio.pause();
+    });
+
+    slider.addEventListener('input', () => {
+      load();
+      if (Number.isFinite(audio.duration)) audio.currentTime = (Number(slider.value) / 100) * audio.duration;
+      sync();
+    });
+
+    return {
+      prepare: load,
+      stop: () => {
+        audio.pause();
+        if (loaded) audio.currentTime = 0;
+        sync();
+      },
+      setLang: (next) => {
+        lang = next;
+        syncButton();
+      },
+    };
+  };
+
+  /* ================= Рисуване на екраните ================= */
+  const STATIC_VARS = Object.freeze({ n: QUESTIONS.length });
+  const SCORE_CIRCUMFERENCE = 2 * Math.PI * SCORE_RADIUS;
+
+  const applyStaticTexts = (lang) => {
+    $$(`[${I18N_ATTR.TEXT}]`).forEach((el) => { el.textContent = tr(lang, el.getAttribute(I18N_ATTR.TEXT), STATIC_VARS); });
+    // Само за наши, предварително написани текстове (никога за написаното от играча)
+    $$(`[${I18N_ATTR.HTML}]`).forEach((el) => { el.innerHTML = tr(lang, el.getAttribute(I18N_ATTR.HTML), STATIC_VARS); });
+    $$(`[${I18N_ATTR.PLACEHOLDER}]`).forEach((el) => { el.placeholder = tr(lang, el.getAttribute(I18N_ATTR.PLACEHOLDER)); });
+    $$(`[${I18N_ATTR.ARIA}]`).forEach((el) => { el.setAttribute('aria-label', tr(lang, el.getAttribute(I18N_ATTR.ARIA))); });
+    $$(`[${I18N_ATTR.ALT}]`).forEach((el) => { el.alt = tr(lang, el.getAttribute(I18N_ATTR.ALT)); });
+    document.documentElement.lang = lang;
+    document.title = tr(lang, 'docTitle');
+  };
+
+  const renderSwitch = (lang) => {
+    $(SEL.LANG_SWITCH).setAttribute('aria-checked', String(lang === LANG.EN));
+    $$(SEL.LANG_OPT).forEach((el) => el.classList.toggle(CLS.ON, el.dataset.langOpt === lang));
+  };
+
+  const showScreen = (screen) => {
+    $$(SEL.SCREEN).forEach((el) => el.classList.toggle(CLS.ACTIVE, el.dataset.screen === screen));
+    window.scrollTo(0, 0);
+  };
+
+  const createRouteView = () => {
+    const route = $(SEL.ROUTE);
+    const track = $(SEL.ROUTE_TRACK);
+    const busHolder = $(SEL.ROUTE_BUS);
+    busHolder.innerHTML = BUS_SVG;
+    $(SEL.ROUTE_FINISH).innerHTML = BIG_BEN_SVG;
+    const bus = $(SEL.BUS_SVG, busHolder);
+    const stops = range(QUESTIONS.length).map((i) => {
+      const stop = document.createElement('span');
+      stop.className = 'route__stop';
+      stop.style.setProperty('--k', String((i + 1) / QUESTIONS.length));
+      track.insertBefore(stop, busHolder);
+      return stop;
+    });
+    let driveTimer = 0;
+
+    return (state, drive) => {
+      if (!drive) route.classList.add(CLS.NO_ANIM);
+      const answered = countAnswered(state.answers);
+      busHolder.style.setProperty('--p', String(answered / state.order.length));
+      stops.forEach((stop, i) => {
+        const qIndex = state.order[i];
+        const chosen = state.answers[qIndex];
+        const done = chosen !== undefined;
+        stop.classList.toggle(CLS.CORRECT, done && isCorrect(qIndex, chosen));
+        stop.classList.toggle(CLS.WRONG, done && !isCorrect(qIndex, chosen));
+      });
+      if (drive) {
+        bus.classList.add(CLS.DRIVING);
+        clearTimeout(driveTimer);
+        driveTimer = setTimeout(() => bus.classList.remove(CLS.DRIVING), DRIVE_MS);
+      } else {
+        void route.offsetWidth;
+        route.classList.remove(CLS.NO_ANIM);
+      }
+    };
+  };
+
+  const renderMeta = (state, bump) => {
+    const { lang, order, current, answers } = state;
+    const qIndex = order[current];
+    $(SEL.COUNTER).innerHTML = tr(lang, 'quiz.counter', { i: current + 1, n: order.length });
+    $(SEL.TAG).innerHTML = tagHtml(QUESTIONS[qIndex].category, lang);
+    $(SEL.POINTS_TEXT).textContent = tr(lang, 'quiz.points', { s: countScore(answers) });
+    if (bump) restartAnimation($(SEL.POINTS), CLS.BUMP);
+  };
+
+  const answerHtml = ({ q, optIdx, pos, lang, chosen, justAnswered }) => {
+    const answered = chosen !== undefined;
+    const classes = ['answer'];
+    if (answered) {
+      if (optIdx === q.correct) classes.push(CLS.CORRECT);
+      else if (optIdx === chosen) classes.push(CLS.WRONG);
+      else classes.push(CLS.DIM);
+      if (justAnswered && optIdx === chosen) classes.push(CLS.PICKED);
+    }
+    return `
+      <button type="button" class="${classes.join(' ')}" data-option="${optIdx}" style="--i:${pos}" ${answered ? 'disabled' : ''}>
+        <span class="answer__letter">${OPTION_LETTERS[lang][pos]}</span>
+        <span class="answer__text">${escapeHtml(q.options[optIdx][lang])}</span>
+        ${iconHtml(ICON.CHECK, 'answer__mark answer__mark--ok')}
+        ${iconHtml(ICON.CROSS, 'answer__mark answer__mark--bad')}
+      </button>`;
+  };
+
+  const footerHtml = ({ q, lang, chosen, isLast }) => {
+    if (chosen === undefined) return `<p class="hint">${escapeHtml(tr(lang, 'quiz.hint'))}</p>`;
+    const ok = chosen === q.correct;
+    const message = ok
+      ? escapeHtml(tr(lang, 'quiz.correct'))
+      : tr(lang, 'quiz.wrong', { a: escapeHtml(q.options[q.correct][lang]) });
+    return `
+      <p class="feedback ${ok ? 'feedback--ok' : 'feedback--bad'}">
+        ${iconHtml(ok ? ICON.CHECK : ICON.CROSS)}<span>${message}</span>
+      </p>
+      <button class="btn btn--primary" type="button" data-action="${ACTION.NEXT}">
+        <span>${escapeHtml(tr(lang, isLast ? 'quiz.finish' : 'quiz.next'))}</span>
+        ${iconHtml(ICON.ARROW, 'btn__arrow')}
+      </button>`;
+  };
+
+  const renderQuestion = (state, { enter, justAnswered }) => {
+    const { lang, order, current, optionOrder, answers } = state;
+    const qIndex = order[current];
+    const q = QUESTIONS[qIndex];
+    const chosen = answers[qIndex];
+    const card = $(SEL.QCARD);
+    card.innerHTML = `
+      <div class="roundel" aria-hidden="true"><span class="roundel__bar">${current + 1}</span></div>
+      <h2 class="qcard__text">${escapeHtml(q.text[lang])}</h2>
+      <div class="answers">
+        ${optionOrder[qIndex].map((optIdx, pos) => answerHtml({ q, optIdx, pos, lang, chosen, justAnswered })).join('')}
+      </div>
+      <div class="qcard__footer">
+        ${footerHtml({ q, lang, chosen, isLast: current === order.length - 1 })}
+      </div>`;
+    if (enter) restartAnimation(card, CLS.ENTERING);
+    else card.classList.remove(CLS.ENTERING);
+    if (justAnswered) $(SEL.ACTION, card)?.focus({ preventScroll: true });
+  };
+
+  const reviewItemHtml = (qIndex, pos, state) => {
+    const { lang, answers } = state;
+    const q = QUESTIONS[qIndex];
+    const chosen = answers[qIndex];
+    const ok = isCorrect(qIndex, chosen);
+    const yours = !ok && chosen !== undefined
+      ? `<p class="review-item__yours">${escapeHtml(tr(lang, 'review.yours'))} <s>${escapeHtml(q.options[chosen][lang])}</s></p>`
+      : '';
+    return `
+      <li class="review-item ${ok ? CLS.CORRECT : CLS.WRONG}" style="--i:${pos}">
+        <div class="review-item__head">
+          <span class="review-item__num">${pos + 1}</span>
+          ${tagHtml(q.category, lang)}
+          <span class="review-item__status">${iconHtml(ok ? ICON.CHECK : ICON.CROSS)}${escapeHtml(tr(lang, ok ? 'review.ok' : 'review.bad'))}</span>
+        </div>
+        <h3 class="review-item__q">${escapeHtml(q.text[lang])}</h3>
+        <p class="review-item__answer">${escapeHtml(tr(lang, 'review.correct'))} <strong>${escapeHtml(q.options[q.correct][lang])}</strong></p>
+        ${yours}
+        <p class="review-item__fact">${iconHtml(ICON.BULB)}<span><b>${escapeHtml(tr(lang, 'review.fact'))}</b> ${escapeHtml(q.fact[lang])}</span></p>
+      </li>`;
+  };
+
+  const animateScore = (score, total) => {
+    const fill = $(SEL.SCORE_FILL);
+    const num = $(SEL.SCORE_NUM);
+    fill.style.transition = 'none';
+    fill.style.strokeDasharray = String(SCORE_CIRCUMFERENCE);
+    fill.style.strokeDashoffset = String(SCORE_CIRCUMFERENCE);
+    void fill.getBoundingClientRect();
+    fill.style.transition = '';
+    fill.style.strokeDashoffset = String(SCORE_CIRCUMFERENCE * (1 - score / total));
+
+    const startedAt = performance.now();
+    const step = (now) => {
+      const t = Math.min(1, (now - startedAt) / SCORE_ANIM_MS);
+      const eased = 1 - (1 - t) ** 3;
+      num.textContent = String(Math.round(eased * score));
+      if (t < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+
+  const renderResult = (state, intro) => {
+    const { lang, order, answers, player } = state;
+    const total = order.length;
+    const score = countScore(answers);
+    const rank = getRank(score, total);
+
+    $(SEL.HEADLINE).textContent = format(rank.headline[lang], { name: player.name });
+    $(SEL.RESULT_GRADE).textContent = tr(lang, 'result.grade', { g: player.grade });
+    $(SEL.RESULT_SCORE).textContent = tr(lang, 'result.score', { s: score, n: total });
+    $(SEL.RANK_ICON).textContent = rank.icon;
+    $(SEL.RANK_TITLE).textContent = rank.title[lang];
+    $(SEL.RANK_NOTE).textContent = rank.note[lang];
+    $(SEL.SCORE_TOTAL).textContent = `/ ${total}`;
+    $(SEL.REVIEW).innerHTML = order.map((qIndex, pos) => reviewItemHtml(qIndex, pos, state)).join('');
+
+    if (intro) animateScore(score, total);
+  };
+
+  /* ================= Стартиране ================= */
+  const init = () => {
+    const store = createStore({
+      lang: LANG.BG,
+      screen: SCREEN.START,
+      player: { name: '', grade: '' },
+      order: [],
+      optionOrder: {},
+      current: 0,
+      answers: {},
+    });
+    const sfx = createSfx();
+    const anthem = createAnthemPlayer({ root: $(SEL.ANTHEM), sourceEl: $(SEL.ANTHEM_DATA) });
+    const renderRoute = createRouteView();
+    const posterBus = $(SEL.POSTER_BUS);
+    const nameInput = $(SEL.NAME);
+    const gradeInput = $(SEL.GRADE);
+    const errorEl = $(SEL.START_ERROR);
+    let starting = false;
+
+    posterBus.innerHTML = BUS_SVG;
+
+    const render = (state, prev) => {
+      const langChanged = state.lang !== prev.lang;
+      const screenChanged = state.screen !== prev.screen;
+
+      if (langChanged) {
+        applyStaticTexts(state.lang);
+        renderSwitch(state.lang);
+        anthem.setLang(state.lang);
+      }
+      if (screenChanged) {
+        if (prev.screen === SCREEN.RESULT) anthem.stop();
+        showScreen(state.screen);
+      }
+
+      if (state.screen === SCREEN.QUIZ) {
+        const newGame = state.order !== prev.order;
+        const moved = newGame || screenChanged || state.current !== prev.current;
+        const answeredNow = !moved && countAnswered(state.answers) > countAnswered(prev.answers);
+        if (moved || answeredNow || langChanged) {
+          const lastPick = answeredNow ? state.answers[state.order[state.current]] : undefined;
+          renderMeta(state, answeredNow && isCorrect(state.order[state.current], lastPick));
+          renderQuestion(state, { enter: moved, justAnswered: answeredNow });
+        }
+        if (moved || answeredNow) renderRoute(state, answeredNow);
+        if (moved && !screenChanged) window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      if (state.screen === SCREEN.RESULT && (screenChanged || langChanged)) {
+        renderResult(state, screenChanged);
+        if (screenChanged) anthem.prepare();
+      }
+    };
+
+    store.subscribe(render);
+
+    /* --- Действия --- */
+    const showError = (key, input) => {
+      errorEl.setAttribute(I18N_ATTR.TEXT, key);
+      errorEl.textContent = tr(store.get().lang, key);
+      restartAnimation(input, CLS.INVALID);
+      input.focus();
+    };
+
+    const clearError = () => {
+      errorEl.removeAttribute(I18N_ATTR.TEXT);
+      errorEl.textContent = '';
+      [nameInput, gradeInput].forEach((input) => input.classList.remove(CLS.INVALID));
+    };
+
+    const startGame = (event) => {
+      event.preventDefault();
+      if (starting) return;
+      const name = nameInput.value.trim();
+      const grade = gradeInput.value.trim();
+      if (!name) return showError('start.errName', nameInput);
+      if (!grade) return showError('start.errGrade', gradeInput);
+      clearError();
+      starting = true;
+      sfx.horn();
+      posterBus.classList.add(CLS.LEAVING);
+      setTimeout(() => {
+        starting = false;
+        store.update((s) => ({ ...createGame(s.order), player: { name, grade }, screen: SCREEN.QUIZ }));
+      }, LEAVE_MS);
+    };
+
+    const choose = (optIdx) => {
+      const state = store.get();
+      const qIndex = state.order[state.current];
+      if (state.screen !== SCREEN.QUIZ || state.answers[qIndex] !== undefined) return;
+      if (isCorrect(qIndex, optIdx)) sfx.correct();
+      else sfx.wrong();
+      store.update({ answers: { ...state.answers, [qIndex]: optIdx } });
+    };
+
+    const next = () => {
+      const state = store.get();
+      const qIndex = state.order[state.current];
+      if (state.answers[qIndex] === undefined) return;
+      if (state.current < state.order.length - 1) store.update({ current: state.current + 1 });
+      else store.update({ screen: SCREEN.RESULT });
+    };
+
+    const playAgain = () => store.update((s) => ({ ...createGame(s.order), screen: SCREEN.QUIZ }));
+
+    const newPlayer = () => {
+      nameInput.value = '';
+      clearError();
+      posterBus.classList.remove(CLS.LEAVING);
+      // Екранът „Начало“ се показва наново, затова автобусът пак пристига сам
+      store.update({ screen: SCREEN.START, player: { name: '', grade: gradeInput.value } });
+      nameInput.focus({ preventScroll: true });
+    };
+
+    const ACTIONS = Object.freeze({
+      [ACTION.NEXT]: next,
+      [ACTION.AGAIN]: playAgain,
+      [ACTION.NEW_PLAYER]: newPlayer,
+    });
+
+    /* --- Събития --- */
+    $(SEL.START_FORM).addEventListener('submit', startGame);
+    [nameInput, gradeInput].forEach((input) => input.addEventListener('input', () => input.classList.remove(CLS.INVALID)));
+
+    $(SEL.LANG_SWITCH).addEventListener('click', () => {
+      store.update((s) => ({ lang: s.lang === LANG.BG ? LANG.EN : LANG.BG }));
+    });
+
+    document.addEventListener('click', (event) => {
+      const answer = event.target.closest(SEL.ANSWER);
+      if (answer && !answer.disabled) return choose(Number(answer.dataset.option));
+      const actionEl = event.target.closest(SEL.ACTION);
+      if (actionEl) ACTIONS[actionEl.dataset.action]?.();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      const state = store.get();
+      if (state.screen !== SCREEN.QUIZ || event.altKey || event.ctrlKey || event.metaKey) return;
+      const qIndex = state.order[state.current];
+      const answered = state.answers[qIndex] !== undefined;
+      const pos = OPTION_KEYS[(event.key || '').toLowerCase()];
+      if (!answered && pos !== undefined) {
+        choose(state.optionOrder[qIndex][pos]);
+      } else if (answered && event.key === NEXT_KEY) {
+        next();
+      }
+    });
+
+    // Първоначално рисуване
+    render(store.get(), { answers: {} });
+  };
+
+  init();
+})();
+</script>
+</body>
+</html>
