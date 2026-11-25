@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
+<meta name="author" content="Стефан Илчев, 4 Д клас">
 <title>Викторина: Лондон и Англия</title>
 <style>
 /* ===== Шрифтове (вградени, работят без интернет) ===== */
@@ -374,6 +375,50 @@ h1, h2, h3, p { overflow-wrap: break-word; }
 .field input.is-invalid { border-color: var(--red); animation: shake .45s; }
 .form__error { grid-column: 1 / -1; min-height: 1.4em; margin: -4px 0 0; color: var(--red-deep); font-weight: 900; font-size: 15px; }
 .form .btn { grid-column: 1 / -1; }
+
+/* Автор на проекта (в горната лента, на всеки екран) */
+.author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.author__avatar {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 14px;
+  box-shadow: 0 0 0 3px var(--paper), 0 0 0 6px var(--red);
+}
+.author__text { display: flex; flex-direction: column; line-height: 1.2; }
+.author__label { font-size: 10.5px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+.author__name { font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--ink); white-space: nowrap; }
+.author__class { font-weight: 900; font-size: 12.5px; color: var(--red); }
+
+.site-footer {
+  position: relative;
+  z-index: 1;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 20px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+.site-footer strong { color: var(--ink); font-weight: 900; }
+.site-footer .brand__mark { width: 22px; height: 22px; border-width: 5px; }
+.site-footer .brand__mark::after { left: -8px; right: -8px; height: 5px; }
 
 /* ===== Екран 2: Въпросите ===== */
 .route {
@@ -857,6 +902,7 @@ h1, h2, h3, p { overflow-wrap: break-word; }
   .poster__body { padding: 28px 24px 26px; }
 }
 @media (max-width: 760px) {
+  .brand__text { display: none; }
   .symbols { grid-template-columns: 1fr; }
   .result-hero { grid-template-columns: 1fr; justify-items: center; text-align: center; padding: 30px 22px; gap: 20px; }
   .result-hero .eyebrow { align-self: center; }
@@ -865,7 +911,17 @@ h1, h2, h3, p { overflow-wrap: break-word; }
   :root { --bus-w: 60px; }
   body { font-size: 17px; }
   .topbar { padding-top: 20px; }
-  .brand__text { display: none; }
+  /* На телефон: само инициалите. Текстът остава скрит за екранни четци */
+  .author__text {
+    position: absolute;
+    width: 1px; height: 1px;
+    margin: -1px; padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .author__avatar { width: 40px; height: 40px; font-size: 13px; }
   .form { grid-template-columns: 1fr; }
   .qcard { padding: 34px 18px 20px; border-radius: 24px; }
   .qcard__text { margin-right: 0; }
@@ -935,6 +991,14 @@ h1, h2, h3, p { overflow-wrap: break-word; }
   <div class="brand">
     <span class="brand__mark" aria-hidden="true"></span>
     <span class="brand__text" data-i18n="brand">Лондон &amp; Англия</span>
+  </div>
+  <div class="author">
+    <span class="author__avatar" aria-hidden="true" data-i18n="author.initials">СИ</span>
+    <span class="author__text">
+      <span class="author__label" data-i18n="author.by">Училищен проект на</span>
+      <span class="author__name" data-i18n="author.name">Стефан Илчев</span>
+      <span class="author__class" data-i18n="author.class">4 Д клас</span>
+    </span>
   </div>
   <button class="lang-switch" id="lang-switch" type="button" role="switch" aria-checked="false" aria-label="English">
     <span class="lang-switch__opt is-on" data-lang-opt="bg">
@@ -1196,6 +1260,11 @@ h1, h2, h3, p { overflow-wrap: break-word; }
 
   <noscript><p>За да работи играта, трябва да е включен JavaScript. / Please enable JavaScript to play.</p></noscript>
 </main>
+
+<footer class="site-footer">
+  <span class="brand__mark" aria-hidden="true"></span>
+  <span data-i18n-html="footer">Училищен проект на <strong>Стефан Илчев</strong> · 4 Д клас</span>
+</footer>
 
 <!-- Химнът (вграден запис, работи без интернет) -->
 <script type="application/octet-stream" id="anthem-data">{{ANTHEM_MP3_BASE64}}</script>
@@ -1521,6 +1590,13 @@ h1, h2, h3, p { overflow-wrap: break-word; }
     },
   ]);
 
+  /* ================= Автор на проекта ================= */
+  const AUTHOR = Object.freeze({
+    name: { bg: 'Стефан Илчев', en: 'Stefan Ilchev' },
+    initials: { bg: 'СИ', en: 'SI' },
+    grade: { bg: '4 Д клас', en: 'Class 4D' },
+  });
+
   /* ================= Текстове на двата езика ================= */
   const TEXT = Object.freeze({
     [LANG.BG]: {
@@ -1573,6 +1649,11 @@ h1, h2, h3, p { overflow-wrap: break-word; }
       'review.fact': 'Интересно:',
       'actions.again': 'Играй пак',
       'actions.newPlayer': 'Нов играч',
+      'author.by': 'Училищен проект на',
+      'author.name': '{author}',
+      'author.initials': '{initials}',
+      'author.class': '{grade}',
+      footer: 'Училищен проект на <strong>{author}</strong> · {grade}',
       credits: 'Гербовете: Sodacan / Wikimedia Commons (CC BY-SA). Химнът: U.S. Navy Band / Wikimedia Commons (обществено достояние). Шрифтове: Unbounded и Nunito (SIL Open Font License).',
     },
     [LANG.EN]: {
@@ -1625,6 +1706,11 @@ h1, h2, h3, p { overflow-wrap: break-word; }
       'review.fact': 'Fun fact:',
       'actions.again': 'Play again',
       'actions.newPlayer': 'New player',
+      'author.by': 'A school project by',
+      'author.name': '{author}',
+      'author.initials': '{initials}',
+      'author.class': '{grade}',
+      footer: 'A school project by <strong>{author}</strong> · {grade}',
       credits: 'Coats of arms: Sodacan / Wikimedia Commons (CC BY-SA). Anthem: U.S. Navy Band / Wikimedia Commons (public domain). Fonts: Unbounded and Nunito (SIL Open Font License).',
     },
   });
@@ -1894,13 +1980,19 @@ h1, h2, h3, p { overflow-wrap: break-word; }
   };
 
   /* ================= Рисуване на екраните ================= */
-  const STATIC_VARS = Object.freeze({ n: QUESTIONS.length });
+  const staticVars = (lang) => ({
+    n: QUESTIONS.length,
+    author: AUTHOR.name[lang],
+    initials: AUTHOR.initials[lang],
+    grade: AUTHOR.grade[lang],
+  });
   const SCORE_CIRCUMFERENCE = 2 * Math.PI * SCORE_RADIUS;
 
   const applyStaticTexts = (lang) => {
-    $$(`[${I18N_ATTR.TEXT}]`).forEach((el) => { el.textContent = tr(lang, el.getAttribute(I18N_ATTR.TEXT), STATIC_VARS); });
+    const vars = staticVars(lang);
+    $$(`[${I18N_ATTR.TEXT}]`).forEach((el) => { el.textContent = tr(lang, el.getAttribute(I18N_ATTR.TEXT), vars); });
     // Само за наши, предварително написани текстове (никога за написаното от играча)
-    $$(`[${I18N_ATTR.HTML}]`).forEach((el) => { el.innerHTML = tr(lang, el.getAttribute(I18N_ATTR.HTML), STATIC_VARS); });
+    $$(`[${I18N_ATTR.HTML}]`).forEach((el) => { el.innerHTML = tr(lang, el.getAttribute(I18N_ATTR.HTML), vars); });
     $$(`[${I18N_ATTR.PLACEHOLDER}]`).forEach((el) => { el.placeholder = tr(lang, el.getAttribute(I18N_ATTR.PLACEHOLDER)); });
     $$(`[${I18N_ATTR.ARIA}]`).forEach((el) => { el.setAttribute('aria-label', tr(lang, el.getAttribute(I18N_ATTR.ARIA))); });
     $$(`[${I18N_ATTR.ALT}]`).forEach((el) => { el.alt = tr(lang, el.getAttribute(I18N_ATTR.ALT)); });
